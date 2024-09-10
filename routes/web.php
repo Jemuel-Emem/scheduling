@@ -44,6 +44,11 @@ Route::middleware([
             return view('admin.medicine');
         })->name('med');
 
+        Route::get('/Appointments', function(){
+            return view('admin.appointments');
+        })->name('apps');
+
+
      });
 
      Route::prefix('user')->middleware('user')->group(function(){

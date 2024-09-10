@@ -160,7 +160,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href=""
+                    <a href="{{ route('apps') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
                         <i class="ri-refund-fill"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">APPOINTMENTS</span>
