@@ -48,6 +48,18 @@ Route::middleware([
             return view('admin.appointments');
         })->name('apps');
 
+        Route::get('/All-residents', function(){
+            return view('admin.all-redidents');
+        })->name('res');
+
+        Route::get('/0-71months', function(){
+            return view('admin.0-71months');
+        })->name('months');
+
+        Route::get('/Bp-monitoring', function(){
+            return view('admin.bp');
+        })->name('bps');
+
 
      });
 

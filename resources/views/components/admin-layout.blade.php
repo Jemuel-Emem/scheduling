@@ -148,40 +148,76 @@
                 <li>
                     <a href="Admindashboard"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
-                        <i class="ri-dashboard-fill"></i>
-                        <span class="ms-3">DASHBOARD</span>
+                        <i class="ri-dashboard-fill text-blue-500"></i>
+                        <span class="ml-10 ms-3">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('med') }}"
-                        class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
-                        <i class="ri-refund-fill"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">MEDICINE</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="{{ route('apps') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
-                        <i class="ri-refund-fill"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">APPOINTMENTS</span>
+                        <i class="ri-team-fill text-blue-500"></i>
+                        <span class="ml-10 ms-3 ">Appointment</span>
                     </a>
                 </li>
 
+
                 <li>
-                    <a href=""
-                        class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
-                        <i class="ri-calendar-todo-fill"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Schedule </span>
+                    <a href="{{ route('med') }}"
+                        class="flex items-center p-2  hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
+                        <i class="ri-medicine-bottle-fill text-blue-500"></i>
+                        <span class="ml-10 ms-3 text-white ">Medicines</span>
                     </a>
                 </li>
 
+
                 <li>
-                    <a href=""
-                        class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
-                        <i class="ri-user-2-fill"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">USERS</span>
-                    </a>
+                    <!-- Dropdown Trigger Button -->
+                    <button type="button"
+                        class="flex items-center p-2 w-full text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow"
+                        aria-controls="residentsDropdown" data-collapse-toggle="residentsDropdown">
+                        <i class="ri-calendar-todo-fill text-blue-500"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Residents</span>
+                        <!-- Arrow Indicator -->
+                        <svg class="w-5 h-5 ms-auto" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <ul id="residentsDropdown" class="hidden py-2 space-y-2">
+                        <li>
+                            <a href="{{ route('res') }}"
+                                class="flex items-center w-full p-2 text-white rounded-lg pl-9 group hover:bg-dark-yellow hover:text-light-yellow">
+                                All Residents
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('months') }}"
+                                class="flex items-center w-full p-2 text-white rounded-lg pl-9 group hover:bg-dark-yellow hover:text-light-yellow">
+                                0-71 months
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center w-full p-2 text-white rounded-lg pl-9 group hover:bg-dark-yellow hover:text-light-yellow">
+                                Pregnancy
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('bps') }}"
+                                class="flex items-center w-full p-2 text-white rounded-lg pl-9 group hover:bg-dark-yellow hover:text-light-yellow">
+                                BP Monitoring
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+
+
 
 
             </ul>

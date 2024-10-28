@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Admin;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Appointment;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -45,7 +45,8 @@ class Appointments extends Component
 
         $this->validate($rules);
 
-        Appointment::create([
+
+        $appointment = Appointment::create([
             'full_name' => $this->name,
             'phone' => $this->phone,
             'age' => $this->age,
@@ -61,8 +62,30 @@ class Appointments extends Component
         ]);
 
         session()->flash('message', 'Appointment successfully booked!');
+
+
+        $ch = curl_init();
+
+        $parameters = array(
+            'apikey' => '046125f45f4f187e838905df98273c4e',
+            'number' => $this->phone,
+           'message' => "Hello {$this->name}, your appointment is scheduled for {$this->date} at {$this->time}. - Estanz",
+            'sendername' => 'Estanz'
+        );
+
+        curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+
+        $output = curl_exec($ch);
+        curl_close($ch);
+
         $this->resetFields();
     }
+
+
 
     public function editAppointment($id)
     {
@@ -111,9 +134,30 @@ class Appointments extends Component
         ]);
 
         session()->flash('message', 'Appointment successfully updated!');
-        $this->resetFields();
+
         $this->editMode = false;
+
+        $ch = curl_init();
+
+        $parameters = array(
+            'apikey' => '046125f45f4f187e838905df98273c4e',
+            'number' => $this->phone,
+           'message' => "Hello {$this->name}, your appointment was rescheduled for {$this->date} at {$this->time}. - Estanz",
+            'sendername' => 'Estanz'
+        );
+
+        curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        $this->resetFields();
     }
+
 
     public function deleteAppointment($id)
     {
