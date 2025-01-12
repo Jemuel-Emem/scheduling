@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome');
+Route::get('/', function () {
+    return redirect()->route('login');  // Redirect to login page when visiting the root
+});
+
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
@@ -77,6 +80,9 @@ Route::middleware([
 
      });
 
+     Route::get('/login', function () {
+        return view('auth.login');  // Make sure the login page exists here
+    })->name('login');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
