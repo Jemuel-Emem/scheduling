@@ -146,7 +146,7 @@
                     </div>
                 </a>
                 <li>
-                    <a href="Admindashboard"
+                    <a href="{{ route('admin-dashboard') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
                         <i class="ri-dashboard-fill text-blue-500"></i>
                         <span class="ml-10 ms-3">Dashboard</span>

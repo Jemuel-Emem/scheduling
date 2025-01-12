@@ -9,8 +9,8 @@
                         <i class="ri-group-2-fill text-2xl"></i>
                     </div>
                     <div>
-                        <h2 class="text-lg font-bold text-dark-yellow">Number of Users</h2>
-                        <p class="text-3xl font-semibold mt-1"></p>
+                        <h2 class="text-lg font-bold text-dark-yellow">Number of Residents</h2>
+                        <p class="text-3xl font-semibold mt-1 text-blue-500">{{ $residentCount }}</p>
                     </div>
                 </div>
 
@@ -21,18 +21,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-dark-yellow">Appointments</h2>
-                        <p class="text-3xl font-semibold mt-1"></p>
-                    </div>
-                </div>
-
-
-                <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
-                    <div class="bg-dark-yellow p-3 rounded-full text-white">
-                        <i class="ri-calendar-todo-fill text-2xl"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-bold text-dark-yellow">Schedule</h2>
-                        <p class="text-3xl font-semibold mt-1"></p> <!-- Replace with dynamic value -->
+                        <p class="text-3xl font-semibold mt-1 text-blue-500">{{ $appointmentCount }}</p>
                     </div>
                 </div>
 
