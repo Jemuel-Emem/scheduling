@@ -63,6 +63,18 @@ Route::middleware([
             return view('admin.bp');
         })->name('bps');
 
+        Route::get('/admin.annoucement', function(){
+            return view('admin.annoucement');
+        })->name('admin.annoucement');
+
+        Route::get('/admin.pregnancy', function(){
+            return view('admin.pregnancy');
+        })->name('admin.pregnancy');
+
+        Route::get('/admin.birthregistry', function(){
+            return view('admin.birthregistry');
+        })->name('admin.birthregistry');
+
 
      });
 

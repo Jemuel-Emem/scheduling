@@ -23,5 +23,6 @@ class residents extends Model
         'citizenship',
         'family_number',
         'zone_or_purok',
+        'phone_number',
     ];
 }

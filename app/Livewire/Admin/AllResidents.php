@@ -10,7 +10,7 @@ use Carbon\Carbon;
 class AllResidents extends Component
 {
     use WithPagination;
-
+    public $phone_number;
     public $surname;
     public $first_name;
     public $middle_name;
@@ -44,6 +44,7 @@ class AllResidents extends Component
         'citizenship' => 'required|string|max:255',
         'family_number' => 'required|integer',
         'zone_or_purok' => 'required|string|max:255',
+        'phone_number' => 'required',
     ];
 
     public function sarch(){
@@ -70,6 +71,7 @@ class AllResidents extends Component
                 'citizenship' => $this->citizenship,
                 'family_number' => $this->family_number,
                 'zone_or_purok' => $this->zone_or_purok,
+                'phone_number' => $this->phone_number,
             ]
         );
 
@@ -98,6 +100,7 @@ class AllResidents extends Component
         $this->citizenship = $resident->citizenship;
         $this->family_number = $resident->family_number;
         $this->zone_or_purok = $resident->zone_or_purok;
+        $this->phone_number = $resident->phone_number;
     }
 
     public function delete($id)
@@ -113,7 +116,7 @@ class AllResidents extends Component
                              ->orWhere('middle_name', 'like', '%' . $this->search . '%')
                              ->paginate(5);
 
-        // Convert date_of_birth to Carbon instance for formatting
+       
         $residents->each(function ($resident) {
             $resident->date_of_birth = Carbon::parse($resident->date_of_birth);
         });
@@ -126,7 +129,7 @@ class AllResidents extends Component
         $this->reset([
             'surname', 'first_name', 'middle_name', 'date_of_birth', 'age', 'gender',
             'place_of_birth', 'relationship_with_family_head', 'civil_status',
-            'occupation', 'religion', 'citizenship', 'family_number', 'zone_or_purok'
+            'occupation', 'religion', 'citizenship', 'family_number', 'zone_or_purok', 'phone_number'
         ]);
         $this->editMode = false;
         $this->editResidentId = null;

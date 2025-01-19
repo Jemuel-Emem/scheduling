@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('citizenship');
             $table->integer('family_number');
             $table->string('zone_or_purok');
+            $table->string('phone_number');
             $table->timestamps();
         });
 
