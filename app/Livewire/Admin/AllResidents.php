@@ -52,8 +52,8 @@ class AllResidents extends Component
     }
     public function addResident()
     {
-        $this->validate();
-
+       // $this->validate();
+       // dd('Validation Passed!');
         Resident::updateOrCreate(
             ['id' => $this->editResidentId],
             [
@@ -88,6 +88,7 @@ class AllResidents extends Component
 
         $this->surname = $resident->surname;
         $this->first_name = $resident->first_name;
+        $this->phone_number = $resident->phone_number;
         $this->middle_name = $resident->middle_name;
         $this->date_of_birth = $resident->date_of_birth;
         $this->age = $resident->age;
@@ -116,7 +117,7 @@ class AllResidents extends Component
                              ->orWhere('middle_name', 'like', '%' . $this->search . '%')
                              ->paginate(5);
 
-       
+
         $residents->each(function ($resident) {
             $resident->date_of_birth = Carbon::parse($resident->date_of_birth);
         });
