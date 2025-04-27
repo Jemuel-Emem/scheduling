@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('height', 5, 2)->nullable();
             $table->integer('family_no');
             $table->string('zone');
+            $table->string('phone_number');
             $table->timestamps();
         });
     }

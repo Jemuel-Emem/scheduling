@@ -17,6 +17,7 @@ class o71months extends Model
         'height',
         'family_no',
         'zone',
+        'phone_number',
     ];
 
     protected $casts = [

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('birth_weight', 5, 2);  // Stores weight like 3.50 (weight in kilograms)
             $table->string('place_of_birth');
             $table->boolean('is_registered')->default(false);
+            $table->string('phone_number');
             $table->timestamps();
         });
     }

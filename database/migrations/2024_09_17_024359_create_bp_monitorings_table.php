@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bp');
             $table->enum('level', ['normal', 'elevated', 'high', 'low']);
             $table->date('date');
+            $table->string('phone_number');
             $table->timestamps();
         });
     }

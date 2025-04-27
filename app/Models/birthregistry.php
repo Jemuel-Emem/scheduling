@@ -19,5 +19,6 @@ class birthregistry extends Model
         'birth_weight',
         'place_of_birth',
         'is_registered',
+        'phone_number',
     ];
 }

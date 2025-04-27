@@ -10,7 +10,7 @@ class O71months extends Component
 {
     use WithPagination;
 
-    public $name_of_child, $name_of_parent, $date_of_birth, $age_in_month, $weight, $height, $family_no, $zone;
+    public $name_of_child, $name_of_parent, $date_of_birth, $age_in_month, $weight, $height, $family_no, $zone, $phone_number;
     public $selectedId;
     public $editMode = false;
     public $search = '';
@@ -24,6 +24,8 @@ class O71months extends Component
         'height' => 'nullable|numeric',
         'family_no' => 'required|integer',
         'zone' => 'required|string|max:255',
+        'phone_number' =>'required',
+
     ];
 
     public function sarch(){
@@ -57,6 +59,7 @@ class O71months extends Component
             'height' => $this->height,
             'family_no' => $this->family_no,
             'zone' => $this->zone,
+            'phone_number' => $this->phone_number,
         ]);
 
         session()->flash('message', 'O71 Month added successfully.');
@@ -77,6 +80,7 @@ class O71months extends Component
         $this->height = $o71month->height;
         $this->family_no = $o71month->family_no;
         $this->zone = $o71month->zone;
+        $this->phone_number = $o71month->phone_number;
     }
 
     public function updateO71month()
@@ -92,6 +96,7 @@ class O71months extends Component
             'height' => $this->height,
             'family_no' => $this->family_no,
             'zone' => $this->zone,
+            'phone_number' => $this->phone_number,
         ]);
 
         session()->flash('message', 'O71 Month updated successfully.');
@@ -108,7 +113,7 @@ class O71months extends Component
     {
         $this->reset([
             'name_of_child', 'name_of_parent', 'date_of_birth', 'age_in_month',
-            'weight', 'height', 'family_no', 'zone', 'editMode', 'selectedId'
+            'weight', 'height', 'family_no', 'zone', 'editMode', 'selectedId', 'phone_number'
         ]);
     }
 }

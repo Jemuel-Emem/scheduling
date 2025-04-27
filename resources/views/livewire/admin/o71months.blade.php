@@ -56,6 +56,12 @@
                 <input type="text" id="zone" wire:model.defer="zone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                 @error('zone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
+
+            <div>
+                <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="text" id="phone_number" wire:model.defer="phone_number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
         </div>
 
         <div class="mt-6">
@@ -82,6 +88,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Height</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Family No</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Zone</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
@@ -96,6 +103,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->height }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->family_no }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->zone }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->phone_number }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button wire:click="edit({{ $o71month->id }})" class="text-blue-600 hover:text-blue-900">View</button>
                             <button wire:click="delete({{ $o71month->id }})" class="text-red-600 hover:text-red-900 ml-4">Delete</button>

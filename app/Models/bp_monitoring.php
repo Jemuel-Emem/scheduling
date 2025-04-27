@@ -15,5 +15,6 @@ class bp_monitoring extends Model
         'bp',
         'level',
         'date',
+        'phone_number',
     ];
 }
