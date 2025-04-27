@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type');
             $table->text('description')->nullable();
             $table->integer('stocks')->default(0);
+            $table->integer('expiration_date')->default(0);
             $table->timestamps();
         });
     }

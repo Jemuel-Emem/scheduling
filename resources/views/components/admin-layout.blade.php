@@ -19,25 +19,25 @@
             display: none;
         }
 
-        /* Color Improvements */
-        .bg-primary-yellow {
-            background-color: #FFD700; /* Golden Yellow */
+        /* Color Improvements - Blue Gradient Theme */
+        .bg-primary-blue {
+            background: linear-gradient(to right, #3b82f6, #60a5fa); /* Light to lighter blue */
         }
 
-        .bg-dark-yellow {
-            background-color: #FFCC00; /* Dark Yellow */
+        .bg-dark-blue {
+            background: linear-gradient(to right, #2563eb, #1d4ed8); /* Darker blue */
         }
 
-        .text-dark-yellow {
-            color: #FFCC00; /* Dark Yellow */
+        .text-dark-blue {
+            color: #1d4ed8; /* Dark Blue */
         }
 
-        .text-light-yellow {
-            color: #FFD700; /* Golden Yellow */
+        .text-light-blue {
+            color: #60a5fa; /* Light Blue */
         }
 
-        .hover-bg-dark-yellow:hover {
-            background-color: #FFB300; /* Slightly darker yellow for hover */
+        .hover-bg-dark-blue:hover {
+            background: linear-gradient(to right, #1e40af, #1d4ed8); /* Even darker on hover */
         }
 
         .background-section {
@@ -60,7 +60,7 @@
             width: 90%;
             padding: 10px 0;
             text-align: center;
-            background-color: #FFCC00; /* Dark Yellow */
+
         }
 
         @media print {
@@ -109,6 +109,7 @@
         }
     </style>
 
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @wireUiScripts
     @livewireStyles
@@ -133,7 +134,8 @@
     <aside id="sidebar-multi-level-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar">
-        <div class="h-full relative px-3 py-4 overflow-y-auto bg-primary-yellow"> <!-- Golden Yellow sidebar -->
+        <div class="h-full relative px-3 py-4 overflow-y-auto bg-primary-blue">
+            <!-- Golden Yellow sidebar -->
             <ul class="space-y-2 font-medium">
                 <a href="ds">
                     <div class="flex flex-col items-center h-full px-3 overflow-y-auto">
@@ -236,13 +238,18 @@
             </ul>
 
             <div class="sidebar-footer">
-                <a href="{{ route('log') }}" class="hover:text-light-yellow text-red-500 p-2 w-32 text-center">Logout</a>
+                <a href="{{ route('log') }}"
+                   class="flex items-center justify-center gap-2 p-2 w-32 mx-auto text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors duration-300">
+                    <i class="ri-logout-box-r-line text-xl"></i>
+                    <span>Logout</span>
+                </a>
             </div>
+
         </div>
     </aside>
 
-    <div class="p-4 sm:ml-64 background-section">
-        <div class="p-4 bg-opacity-75 border-gray-200 rounded-lg dark:border-gray-700">
+    <div class="p-4 sm:ml-64  m-h-screen rounded-lg">
+        <div class="p-4  border-gray-200 rounded-lg ">
             <main>
                 {{ $slot }}
             </main>
