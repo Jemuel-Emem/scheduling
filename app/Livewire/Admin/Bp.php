@@ -12,7 +12,7 @@ class Bp extends Component
 
 
     public $resident_name;
-    public $age;
+    public $age, $phone_number;
     public $bp;
     public $level;
     public $date;
@@ -25,6 +25,7 @@ class Bp extends Component
         'bp' => 'required|string|max:50',
         'level' => 'required|string|in:normal,elevated,high,low',
         'date' => 'required|date',
+        'phone_number' => 'required'
     ];
 
 
@@ -54,6 +55,7 @@ class Bp extends Component
                 'bp' => $this->bp,
                 'level' => $this->level,
                 'date' => $this->date,
+                'phone_number' =>$this->phone_number,
             ]);
             session()->flash('success', 'BP Monitoring data updated successfully.');
         } else {
@@ -64,6 +66,7 @@ class Bp extends Component
                 'bp' => $this->bp,
                 'level' => $this->level,
                 'date' => $this->date,
+                'phone_number' => $this->phone_number,
             ]);
             session()->flash('success', 'BP Monitoring data added successfully.');
         }
@@ -79,6 +82,7 @@ class Bp extends Component
         $this->bp = '';
         $this->level = '';
         $this->date = '';
+        $this->phone_number= '';
         $this->bp_id = null;
     }
 
@@ -93,6 +97,7 @@ class Bp extends Component
         $this->bp = $bpMonitoring->bp;
         $this->level = $bpMonitoring->level;
         $this->date = $bpMonitoring->date;
+        $this->phone_number = $bpMonitoring->phone_number;
     }
 
 

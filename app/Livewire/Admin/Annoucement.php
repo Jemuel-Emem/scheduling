@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class Annoucement extends Component
 {
+    public $target = 'residents';
     public $title;
     public $details;
     public $date;
@@ -19,8 +20,8 @@ class Annoucement extends Component
         'details' => 'required|string',
         'date' => 'required|date',
         'time' => 'required|date_format:H:i',
+        'target' => 'required|in:residents,o71months,bp_monitorings,pregnancies,birthregistries',
     ];
-
     // public function sendAnnouncementSMS($announcement)
     // {
     //     $residents = residents::all();
@@ -55,7 +56,6 @@ class Annoucement extends Component
     {
         $this->validate();
 
-
         $announcement = Announcement::create([
             'title' => $this->title,
             'details' => $this->details,
@@ -63,22 +63,54 @@ class Annoucement extends Component
             'time' => $this->time,
         ]);
 
+        switch ($this->target) {
+            case 'residents':
+                $recipients = \App\Models\residents::all();
+                $phoneField = 'phone_number';
+                $nameField = 'first_name';
+                break;
+            case 'o71months':
+                $recipients = \App\Models\o71months::all();
+                $phoneField = 'phone_number';
+                $nameField = 'name_of_child';
+                break;
+            case 'bp_monitorings':
+                $recipients = \App\Models\bp_monitoring::all();
+                $phoneField = 'phone_number';
+                $nameField = 'resident_name';
+                break;
+            case 'pregnancies':
+                $recipients = \App\Models\pregnancy::all();
+                $phoneField = 'mobile_number';
+                $nameField = 'name';
+                break;
+            case 'birthregistries':
+                $recipients = \App\Models\birthregistry::all();
+                $phoneField = 'phone_number';
+                $nameField = 'name_of_child';
+                break;
+            default:
+                $recipients = collect();
+                $phoneField = 'phone_number';
+                $nameField = 'first_name';
+                break;
+        }
 
-        $residents = residents::all();
-
-
-        if ($residents->isEmpty()) {
-            session()->flash('error', 'No residents found to send the announcement.');
+        if ($recipients->isEmpty()) {
+            session()->flash('error', 'No recipients found to send the announcement.');
             return;
         }
 
-        foreach ($residents as $resident) {
-            $ch = curl_init();
+        foreach ($recipients as $recipient) {
+            if (!$recipient->{$phoneField}) {
+                continue; // skip if no phone number
+            }
 
+            $ch = curl_init();
             $parameters = [
                 'apikey' => '046125f45f4f187e838905df98273c4e',
-                'number' => $resident->phone_number,
-                'message' => "Hello {$resident->first_name}, there's a new announcement:\n"
+                'number' => $recipient->{$phoneField},
+                'message' => "Hello {$recipient->{$nameField}}, there's a new announcement:\n"
                     . "Title: {$announcement->title}\n"
                     . "Description: {$announcement->details}\n"
                     . "Date: {$announcement->date}\n"
@@ -95,12 +127,9 @@ class Annoucement extends Component
             curl_close($ch);
         }
 
-
         $this->reset();
 
-
-        session()->flash('message', 'Announcement successfully added and SMS sent to all residents!');
-
+        session()->flash('message', 'Announcement successfully added and SMS sent to selected group!');
 
         $this->loadAnnouncements();
     }

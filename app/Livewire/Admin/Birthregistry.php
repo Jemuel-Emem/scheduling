@@ -11,7 +11,7 @@ class Birthregistry extends Component
     use WithPagination;
 
     public $search = '';
-    public $name_of_child, $name_of_parent, $date_of_birth, $family_no, $zone, $gender, $birth_weight, $place_of_birth, $is_registered;
+    public $phone_number, $name_of_child, $name_of_parent, $date_of_birth, $family_no, $zone, $gender, $birth_weight, $place_of_birth, $is_registered;
     public $birthRegistryId, $editMode = false;
 
     public function render()
@@ -39,6 +39,7 @@ class Birthregistry extends Component
             'birth_weight' => 'required|numeric',
             'place_of_birth' => 'required|string|max:255',
             'is_registered' => 'required|boolean',
+            'phone_number' => 'required'
         ]);
 
         Birth::create([
@@ -51,6 +52,7 @@ class Birthregistry extends Component
             'birth_weight' => $this->birth_weight,
             'place_of_birth' => $this->place_of_birth,
             'is_registered' => $this->is_registered,
+            'phone_number' => $this->phone_number
         ]);
 
         session()->flash('message', 'Birth Registry Record Added Successfully!');
@@ -68,6 +70,7 @@ class Birthregistry extends Component
         $this->birth_weight = '';
         $this->place_of_birth = '';
         $this->is_registered = '';
+        $this->phone_number= '';
     }
 
     public function edit($id)
@@ -83,6 +86,7 @@ class Birthregistry extends Component
         $this->birth_weight = $birthRegistry->birth_weight;
         $this->place_of_birth = $birthRegistry->place_of_birth;
         $this->is_registered = $birthRegistry->is_registered;
+        $this->phone_number = $birthRegistry->phone_number;
         $this->editMode = true;
     }
 
@@ -111,6 +115,7 @@ class Birthregistry extends Component
             'birth_weight' => $this->birth_weight,
             'place_of_birth' => $this->place_of_birth,
             'is_registered' => $this->is_registered,
+            'phone_number' => $this->phone_number,
         ]);
 
         session()->flash('message', 'Birth Registry Record Updated Successfully!');

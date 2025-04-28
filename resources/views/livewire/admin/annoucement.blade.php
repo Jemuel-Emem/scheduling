@@ -38,6 +38,18 @@
                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm">
                 @error('time') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
+            <div>
+                <label for="target" class="block text-sm font-semibold text-gray-700">Send To</label>
+                <select id="target" wire:model="target"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm">
+                    <option value="residents">Residents</option>
+                    <option value="o71months">0-71 Months Children</option>
+                    <option value="bp_monitorings">Blood Pressure Monitorings</option>
+                    <option value="pregnancies">Pregnant Women</option>
+                    <option value="birthregistries">Birth Registries</option>
+                </select>
+                @error('target') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
 
             <div>
                 <button type="submit"

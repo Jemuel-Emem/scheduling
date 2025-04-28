@@ -90,10 +90,10 @@
             <tbody>
                 @foreach($pregnancies as $pregnancy)
                     <tr class="hover:bg-gray-100">
-                        <td class="px-6 py-4 text-sm text-gray-900">{{ $pregnancy->name }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ $pregnancy->zone }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ \Carbon\Carbon::parse($pregnancy->estimated_due_date)->format('Y-m-d') }}</td>
-                        <td class="px-6 py-4 text-sm flex space-x-2">
+                        <td class="px-6 py-4 text-sm text-center text-gray-900">{{ $pregnancy->name }}</td>
+                        <td class="px-6 py-4 text-sm text-center text-gray-500">{{ $pregnancy->zone }}</td>
+                        <td class="px-6 py-4 text-sm text-center text-gray-500">{{ \Carbon\Carbon::parse($pregnancy->estimated_due_date)->format('Y-m-d') }}</td>
+                        <td class="px-6 py-4 text-sm text-center flex space-x-2 flex justify-center">
                             <button wire:click="editPregnancy({{ $pregnancy->id }})" class="text-blue-500 hover:text-blue-700">Edit</button>
                             <button wire:click="deletePregnancy({{ $pregnancy->id }})" class="text-red-500 hover:text-red-700">Delete</button>
                         </td>

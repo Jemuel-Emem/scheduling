@@ -23,7 +23,11 @@
                 <input type="number" wire:model="age" id="age" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Enter age">
                 @error('age') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
-
+            <div>
+                <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="text" id="phone_number" wire:model.defer="phone_number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
             <!-- BP -->
             <div>
                 <label for="bp" class="block text-gray-700 font-medium mb-2">Blood Pressure (BP)</label>
@@ -83,8 +87,8 @@
                     <td class="py-3 px-6 text-left">{{ ucfirst($bp_monitoring->level) }}</td>
                     <td class="py-3 px-6 text-left">{{ $bp_monitoring->date }}</td>
                     <td class="py-3 px-6 text-center">
-                        <button wire:click="edit({{ $bp_monitoring->id }})" class="px-4 py-2 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600">Edit</button>
-                        <button wire:click="delete({{ $bp_monitoring->id }})" class="px-4 py-2 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600">Delete</button>
+                        <button wire:click="edit({{ $bp_monitoring->id }})" class="px-4 py-2  text-blue-500 font-medium rounded-lg hover:bg-yellow-600">Edit</button>
+                        <button wire:click="delete({{ $bp_monitoring->id }})" class="px-4 py-2  text-red-500 font-medium rounded-lg hover:bg-red-600">Delete</button>
                     </td>
                 </tr>
             @endforeach
