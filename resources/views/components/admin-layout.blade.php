@@ -154,13 +154,13 @@
                         <span class="ml-10 ms-3">Dashboard</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('admin.annoucement') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
                         <i class="ri-megaphone-fill text-blue-500"></i>
                         <span class="ml-10 ms-3 ">Announcements</span>
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{ route('apps') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">

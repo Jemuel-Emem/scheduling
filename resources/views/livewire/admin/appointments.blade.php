@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
     <div class="w-full max-w-6xl bg-white rounded-lg shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Book an Appointment</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Schedule an Appointment</h2>
 
         @if (session()->has('message'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -114,7 +114,7 @@
             <div class="col-span-2">
                 <button type="submit"
                         class="w-full px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition duration-200">
-                    {{ $editMode ? 'Update Appointment' : 'Book Appointment' }}
+                    {{ $editMode ? 'Update Appointment' : 'Schedule Appointment' }}
                 </button>
             </div>
         </form>
