@@ -16,13 +16,16 @@ class Index extends Component
     public $rescheduleCount;
     public $residentCount;
     public $appointmentCount;
+    public $normalBpCount;
+    public $elevatedBpCount;
 
     public $birthRegistryCount;
     public $bpMonitoringCount;
     public $o71MonthsCount;
     public $pregnancyCount;
     public $medicineCount;
-
+    public $highBpCount; // Add this
+    public $lowBpCount;
     public $target = 'residents';
     public $title;
     public $details;
@@ -135,7 +138,11 @@ class Index extends Component
         $this->pregnancyCount = pregnancy::count();
         $this->medicineCount = Medicine::count();
         $this->rescheduleCount = Appointment::where('reschedule_option', 'date')->whereNotNull('reschedule_date')->count();
-
+        $this->bpMonitoringCount = bp_monitoring::count();
+        $this->normalBpCount = bp_monitoring::where('level', 'normal')->count();
+        $this->elevatedBpCount = bp_monitoring::where('level', 'elevated')->count();
+        $this->highBpCount = bp_monitoring::where('level', 'high')->count();
+        $this->lowBpCount = bp_monitoring::where('level', 'low')->count();
     }
 
     public function render()

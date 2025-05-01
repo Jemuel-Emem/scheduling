@@ -39,6 +39,7 @@
             <div>
                 <label for="level" class="block text-gray-700 font-medium mb-2">BP Level</label>
                 <select wire:model="level" id="level" class="w-full p-2 border border-gray-300 rounded-lg">
+                    <option value="">Null</option>
                     <option value="normal">Normal</option>
                     <option value="elevated">Elevated</option>
                     <option value="high">High</option>

@@ -36,16 +36,36 @@
                     </div>
                 </div>
 
-                <!-- BP Monitoring Card -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
-                    <div class="bg-gradient-to-r from-blue-400 to-blue-600 p-3 rounded-full text-white">
-                        <i class="ri-heart-pulse-fill text-2xl"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-bold text-blue-600">BP Monitoring</h2>
-                        <p class="text-3xl font-semibold mt-1 text-gray-800">{{ $bpMonitoringCount }}</p>
-                    </div>
-                </div>
+             <!-- BP Monitoring Card -->
+<div class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="flex items-center space-x-4 mb-4">
+        <div class="bg-gradient-to-r from-blue-400 to-blue-600 p-3 rounded-full text-white">
+            <i class="ri-heart-pulse-fill text-2xl"></i>
+        </div>
+        <div>
+            <h2 class="text-lg font-bold text-blue-600">BP Monitoring</h2>
+            <p class="text-3xl font-semibold mt-1 text-gray-800">{{ $bpMonitoringCount }}</p>
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-2">
+        <div class="bg-green-100 p-2 rounded-lg text-center">
+            <p class="text-sm font-medium text-green-800">Normal</p>
+            <p class="text-xl font-semibold">{{ $normalBpCount }}</p>
+        </div>
+        <div class="bg-yellow-100 p-2 rounded-lg text-center">
+            <p class="text-sm font-medium text-yellow-800">Elevated</p>
+            <p class="text-xl font-semibold">{{ $elevatedBpCount }}</p>
+        </div>
+        <div class="bg-red-100 p-2 rounded-lg text-center">
+            <p class="text-sm font-medium text-red-800">High</p>
+            <p class="text-xl font-semibold">{{ $highBpCount }}</p>
+        </div>
+        <div class="bg-blue-100 p-2 rounded-lg text-center">
+            <p class="text-sm font-medium text-blue-800">Low</p>
+            <p class="text-xl font-semibold">{{ $lowBpCount }}</p>
+        </div>
+    </div>
+</div>
 
                 <!-- 0-71 Months Card -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
