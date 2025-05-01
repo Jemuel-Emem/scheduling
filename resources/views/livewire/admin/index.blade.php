@@ -69,6 +69,16 @@
                     </div>
                 </div>
 
+<!-- Rescheduled Appointments Card -->
+<div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+    <div class="bg-gradient-to-r from-blue-400 to-blue-600 p-3 rounded-full text-white">
+        <i class="ri-refresh-line text-2xl"></i>
+    </div>
+    <div>
+        <h2 class="text-lg font-bold text-blue-600">Rescheduled Appointments</h2>
+        <p class="text-3xl font-semibold mt-1 text-gray-800">{{ $rescheduleCount }}</p>
+    </div>
+</div>
 
 
             </div>

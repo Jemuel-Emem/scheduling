@@ -75,6 +75,10 @@ Route::middleware([
             return view('admin.birthregistry');
         })->name('admin.birthregistry');
 
+        Route::get('/admin.reschedule', function(){
+            return view('admin.reschedule');
+        })->name('admin.reschedule');
+
 
      });
 

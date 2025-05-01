@@ -13,6 +13,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $rescheduleCount;
     public $residentCount;
     public $appointmentCount;
 
@@ -133,6 +134,8 @@ class Index extends Component
         $this->o71MonthsCount = o71months::count();
         $this->pregnancyCount = pregnancy::count();
         $this->medicineCount = Medicine::count();
+        $this->rescheduleCount = Appointment::where('reschedule_option', 'date')->whereNotNull('reschedule_date')->count();
+
     }
 
     public function render()

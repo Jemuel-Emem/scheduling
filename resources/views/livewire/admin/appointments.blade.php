@@ -143,8 +143,8 @@
                             <td class="py-2 px-4 border-b">{{ $appointment->phone }}</td>
                             <td class="py-2 px-4 border-b">{{ $appointment->date_schedule }}</td>
                             <td class="py-2 px-4 border-b flex space-x-2 justify-center">
-                                <button wire:click="editAppointment({{ $appointment->id }})" class="px-2 py-1 bg-blue-500 text-white rounded">View/Update</button>
-                                <button wire:click="deleteAppointment({{ $appointment->id }})" class="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+                                <button wire:click="editAppointment({{ $appointment->id }})" class="px-2 py-1  text-blue-500 rounded">View/Update</button>
+                                <button wire:click="deleteAppointment({{ $appointment->id }})" class="px-2 py-1  text-red-500 rounded">Delete</button>
                             </td>
                         </tr>
                     @endforeach

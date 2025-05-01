@@ -168,7 +168,13 @@
                         <span class="ml-10 ms-3 ">Appointment</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="{{ route('admin.reschedule') }}"
+                        class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
+                        <i class="ri-team-fill text-blue-500"></i>
+                        <span class="ml-10 ms-3 ">Reschedule</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="{{ route('med') }}"
