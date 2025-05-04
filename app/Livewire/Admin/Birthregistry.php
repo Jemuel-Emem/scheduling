@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Livewire\Admin;
 
-use App\Models\birthregistry as Birth;
+use App\Models\Birthregistry as Birth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +12,22 @@ class Birthregistry extends Component
     public $search = '';
     public $phone_number, $name_of_child, $name_of_parent, $date_of_birth, $family_no, $zone, $gender, $birth_weight, $place_of_birth, $is_registered;
     public $birthRegistryId, $editMode = false;
+    public $showModal = false;
+    public $viewMode = false;
+    public $currentRecord;
+
+    protected $rules = [
+        'name_of_child' => 'required|string|max:255',
+        'name_of_parent' => 'required|string|max:255',
+        'date_of_birth' => 'required|date',
+        'family_no' => 'required|integer',
+        'zone' => 'required|string|max:255',
+        'gender' => 'required|string|max:255',
+        'birth_weight' => 'required|numeric',
+        'place_of_birth' => 'required|string|max:255',
+        'is_registered' => 'required|boolean',
+        'phone_number' => 'required'
+    ];
 
     public function render()
     {
@@ -24,23 +39,17 @@ class Birthregistry extends Component
         return view('livewire.admin.birthregistry', compact('birthregistries'));
     }
 
-    public function sarch(){
-        $this->render();
+    public function openAddModal()
+    {
+        $this->resetInputFields();
+        $this->editMode = false;
+        $this->viewMode = false;
+        $this->showModal = true;
     }
+
     public function store()
     {
-        $this->validate([
-            'name_of_child' => 'required|string|max:255',
-            'name_of_parent' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'family_no' => 'required|integer',
-            'zone' => 'required|string|max:255',
-            'gender' => 'required|string|max:255',
-            'birth_weight' => 'required|numeric',
-            'place_of_birth' => 'required|string|max:255',
-            'is_registered' => 'required|boolean',
-            'phone_number' => 'required'
-        ]);
+        $this->validate();
 
         Birth::create([
             'name_of_child' => $this->name_of_child,
@@ -56,27 +65,23 @@ class Birthregistry extends Component
         ]);
 
         session()->flash('message', 'Birth Registry Record Added Successfully!');
+        $this->showModal = false;
         $this->resetInputFields();
     }
 
-    private function resetInputFields()
+    public function view($id)
     {
-        $this->name_of_child = '';
-        $this->name_of_parent = '';
-        $this->date_of_birth = '';
-        $this->family_no = '';
-        $this->zone = '';
-        $this->gender = '';
-        $this->birth_weight = '';
-        $this->place_of_birth = '';
-        $this->is_registered = '';
-        $this->phone_number= '';
+        $this->currentRecord = Birth::findOrFail($id);
+        $this->viewMode = true;
+        $this->showModal = true;
+        $this->editMode = false;
     }
 
     public function edit($id)
     {
         $birthRegistry = Birth::findOrFail($id);
-        $this->birthRegistryId = $birthRegistry->id;
+
+        $this->birthRegistryId = $id;
         $this->name_of_child = $birthRegistry->name_of_child;
         $this->name_of_parent = $birthRegistry->name_of_parent;
         $this->date_of_birth = $birthRegistry->date_of_birth;
@@ -87,25 +92,17 @@ class Birthregistry extends Component
         $this->place_of_birth = $birthRegistry->place_of_birth;
         $this->is_registered = $birthRegistry->is_registered;
         $this->phone_number = $birthRegistry->phone_number;
+
         $this->editMode = true;
+        $this->viewMode = false;
+        $this->showModal = true;
     }
 
     public function update()
     {
-        $this->validate([
-            'name_of_child' => 'required|string|max:255',
-            'name_of_parent' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'family_no' => 'required|integer',
-            'zone' => 'required|string|max:255',
-            'gender' => 'required|string|max:255',
-            'birth_weight' => 'required|numeric',
-            'place_of_birth' => 'required|string|max:255',
-            'is_registered' => 'required|boolean',
-        ]);
+        $this->validate();
 
-        $birthRegistry = Birth::find($this->birthRegistryId);
-        $birthRegistry->update([
+        Birth::findOrFail($this->birthRegistryId)->update([
             'name_of_child' => $this->name_of_child,
             'name_of_parent' => $this->name_of_parent,
             'date_of_birth' => $this->date_of_birth,
@@ -119,8 +116,8 @@ class Birthregistry extends Component
         ]);
 
         session()->flash('message', 'Birth Registry Record Updated Successfully!');
+        $this->showModal = false;
         $this->resetInputFields();
-        $this->editMode = false;
     }
 
     public function delete($id)
@@ -129,8 +126,22 @@ class Birthregistry extends Component
         session()->flash('message', 'Birth Registry Record Deleted Successfully!');
     }
 
+    private function resetInputFields()
+    {
+        $this->reset([
+            'name_of_child', 'name_of_parent', 'date_of_birth', 'family_no',
+            'zone', 'gender', 'birth_weight', 'place_of_birth', 'is_registered',
+            'phone_number', 'birthRegistryId', 'editMode', 'viewMode', 'currentRecord'
+        ]);
+        $this->resetErrorBag();
+    }
+
     public function updatedSearch()
     {
-        $this->render();
+        $this->resetPage();
+    }
+
+    public function sarch(){
+
     }
 }

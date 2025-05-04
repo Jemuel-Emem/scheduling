@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Admin;
-use Illuminate\Support\Facades\Log;
+
 use App\Models\Appointment;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,6 +14,9 @@ class Appointments extends Component
     public $search = '';
     public $appointmentId;
     public $editMode = false;
+    public $showModal = false;
+    public $viewMode = false;
+    public $currentRecord;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -30,9 +33,12 @@ class Appointments extends Component
         'blood_pressure' => 'nullable|string',
     ];
 
-    public function resetFields()
+    public function openAddModal()
     {
-        $this->reset(['name', 'phone', 'age', 'address', 'purpose', 'date', 'reschedule_option', 'reschedule_date', 'time', 'health_condition', 'health_status', 'blood_pressure']);
+        $this->resetFields();
+        $this->editMode = false;
+        $this->viewMode = false;
+        $this->showModal = true;
     }
 
     public function submitAppointment()
@@ -44,7 +50,6 @@ class Appointments extends Component
         }
 
         $this->validate($rules);
-
 
         $appointment = Appointment::create([
             'full_name' => $this->name,
@@ -62,35 +67,24 @@ class Appointments extends Component
         ]);
 
         session()->flash('message', 'Appointment successfully booked!');
-
-
-        $ch = curl_init();
-
-        $parameters = array(
-            'apikey' => '046125f45f4f187e838905df98273c4e',
-            'number' => $this->phone,
-           'message' => "Hello {$this->name}, your appointment is scheduled for {$this->date} at {$this->time}. - Estanz",
-            'sendername' => 'Estanz'
-        );
-
-        curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-
-        $output = curl_exec($ch);
-        curl_close($ch);
-
+        $this->sendSMS($this->phone, $this->name, $this->date, $this->time, 'scheduled');
+        $this->showModal = false;
         $this->resetFields();
     }
 
-
+    public function view($id)
+    {
+        $this->currentRecord = Appointment::findOrFail($id);
+        $this->viewMode = true;
+        $this->showModal = true;
+        $this->editMode = false;
+    }
 
     public function editAppointment($id)
     {
         $appointment = Appointment::findOrFail($id);
-        $this->appointmentId = $appointment->id;
+
+        $this->appointmentId = $id;
         $this->name = $appointment->full_name;
         $this->phone = $appointment->phone;
         $this->age = $appointment->age;
@@ -105,6 +99,8 @@ class Appointments extends Component
         $this->blood_pressure = $appointment->blood_pressure;
 
         $this->editMode = true;
+        $this->viewMode = false;
+        $this->showModal = true;
     }
 
     public function updateAppointment()
@@ -134,55 +130,65 @@ class Appointments extends Component
         ]);
 
         session()->flash('message', 'Appointment successfully updated!');
+        $this->sendSMS($this->phone, $this->name, $this->date, $this->time, 'rescheduled');
+        $this->showModal = false;
+        $this->resetFields();
+    }
 
-        $this->editMode = false;
+    public function deleteAppointment($id)
+    {
+        Appointment::findOrFail($id)->delete();
+        session()->flash('message', 'Appointment deleted successfully!');
+    }
 
+    private function sendSMS($phone, $name, $date, $time, $type)
+    {
         $ch = curl_init();
 
-        $parameters = array(
+        $message = $type === 'scheduled'
+            ? "Hello $name, your appointment is scheduled for $date at $time. - Estanz"
+            : "Hello $name, your appointment was rescheduled for $date at $time. - Estanz";
+
+        $parameters = [
             'apikey' => '046125f45f4f187e838905df98273c4e',
-            'number' => $this->phone,
-           'message' => "Hello {$this->name}, your appointment was rescheduled for {$this->date} at {$this->time}. - Estanz",
+            'number' => $phone,
+            'message' => $message,
             'sendername' => 'Estanz'
-        );
+        ];
 
         curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-
         $output = curl_exec($ch);
         curl_close($ch);
-
-        $this->resetFields();
     }
 
-
-    public function deleteAppointment($id)
+    private function resetFields()
     {
-        Appointment::find($id)->delete();
-        session()->flash('message', 'Appointment deleted successfully!');
+        $this->reset([
+            'name', 'phone', 'age', 'address', 'purpose', 'date', 'reschedule_option',
+            'reschedule_date', 'time', 'health_condition', 'health_status', 'blood_pressure',
+            'appointmentId', 'editMode', 'viewMode', 'currentRecord'
+        ]);
+        $this->resetErrorBag();
     }
-
-    public function searchname(){
+    public function sarch(){
 
     }
-
     public function render()
     {
-        $appointments = Appointment::query();
-
-        if (!empty($this->search)) {
-            $appointments = $appointments->where(function ($query) {
-                $query->where('full_name', 'like', '%'.$this->search.'%')
+        $appointments = Appointment::query()
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('full_name', 'like', '%'.$this->search.'%')
                       ->orWhere('phone', 'like', '%'.$this->search.'%')
                       ->orWhere('date_schedule', 'like', '%'.$this->search.'%');
-            });
-        }
+                });
+            })
+            ->paginate(5);
 
-        return view('livewire.admin.appointments', [
-            'appointments' => $appointments->paginate(5)
-        ]);
+        return view('livewire.admin.appointments', compact('appointments'));
     }
 }

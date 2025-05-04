@@ -154,13 +154,13 @@
                         <span class="ml-10 ms-3">Dashboard</span>
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="{{ route('admin.annoucement') }}"
+                <li>
+                    <a href="{{ route('admin.masterlist') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
                         <i class="ri-megaphone-fill text-blue-500"></i>
-                        <span class="ml-10 ms-3 ">Announcements</span>
+                        <span class="ml-10 ms-3 ">Master Lists</span>
                     </a>
-                </li> --}}
+                </li>
                 <li>
                     <a href="{{ route('apps') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
@@ -181,6 +181,14 @@
                         class="flex items-center p-2  hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
                         <i class="ri-medicine-bottle-fill text-blue-500"></i>
                         <span class="ml-10 ms-3 text-white ">Medicines</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.medical_record') }}"
+                        class="flex items-center p-2  hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
+                        <i class="ri-medicine-bottle-fill text-blue-500"></i>
+                        <span class="ml-10 ms-3 text-white ">Medical Records</span>
                     </a>
                 </li>
 
@@ -243,9 +251,10 @@
 
             </ul>
 
-            <div class="sidebar-footer">
+            <div class="h-full relative px-3 py-4 overflow-y-auto bg-primary-blue">
+
                 <a href="{{ route('log') }}"
-                   class="flex items-center justify-center gap-2 p-2 w-32 mx-auto text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors duration-300">
+                   class=" flex items-center justify-center gap-2 p-2 w-32 mx-auto text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors duration-300">
                     <i class="ri-logout-box-r-line text-xl"></i>
                     <span>Logout</span>
                 </a>

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire\Admin;
-
 use App\Models\residents as Resident;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,6 +28,9 @@ class AllResidents extends Component
     public $editMode = false;
     public $editResidentId;
 
+    public $showFormModal = false;
+    public $showViewModal = false;
+
     protected $rules = [
         'surname' => 'required|string|max:255',
         'first_name' => 'required|string|max:255',
@@ -46,6 +48,43 @@ class AllResidents extends Component
         'zone_or_purok' => 'required|string|max:255',
         'phone_number' => 'required',
     ];
+    public $showModal = false;
+    public $viewingResident;
+
+    public function openAddModal()
+    {
+        $this->resetForm();
+        $this->editMode = false;
+        $this->showFormModal = true;
+    }
+    public function view($id)
+    {
+
+        $this->viewingResident = Resident::findOrFail($id);
+        $this->showViewModal = true;
+        $this->showFormModal = false;
+        $resident = Resident::findOrFail($id);
+
+        $this->editResidentId = $id;
+        $this->surname = $resident->surname;
+        $this->first_name = $resident->first_name;
+        $this->middle_name = $resident->middle_name;
+        $this->date_of_birth = Carbon::parse($resident->date_of_birth)->format('Y-m-d');
+
+        $this->age = $resident->age;
+        $this->gender = $resident->gender;
+        $this->place_of_birth = $resident->place_of_birth;
+        $this->relationship_with_family_head = $resident->relationship_with_family_head;
+        $this->civil_status = $resident->civil_status;
+        $this->occupation = $resident->occupation;
+        $this->religion = $resident->religion;
+        $this->citizenship = $resident->citizenship;
+        $this->family_number = $resident->family_number;
+        $this->zone_or_purok = $resident->zone_or_purok;
+
+        $this->editMode = true;
+        $this->showModal = true;
+    }
 
     public function sarch(){
         $this->render();
@@ -76,7 +115,7 @@ class AllResidents extends Component
         );
 
         session()->flash('message', $this->editResidentId ? 'Resident updated successfully.' : 'Resident added successfully.');
-
+        $this->showFormModal = false;
         $this->resetForm();
     }
 
@@ -102,6 +141,8 @@ class AllResidents extends Component
         $this->family_number = $resident->family_number;
         $this->zone_or_purok = $resident->zone_or_purok;
         $this->phone_number = $resident->phone_number;
+
+        $this->showFormModal = true;
     }
 
     public function delete($id)

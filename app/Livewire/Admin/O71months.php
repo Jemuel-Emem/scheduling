@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\o71months as O71month;
+use App\Models\O71months as O71month;
 
 class O71months extends Component
 {
@@ -14,6 +13,9 @@ class O71months extends Component
     public $selectedId;
     public $editMode = false;
     public $search = '';
+    public $showModal = false;
+    public $viewMode = false;
+    public $currentRecord;
 
     protected $rules = [
         'name_of_child' => 'required|string|max:255',
@@ -24,12 +26,11 @@ class O71months extends Component
         'height' => 'nullable|numeric',
         'family_no' => 'required|integer',
         'zone' => 'required|string|max:255',
-        'phone_number' =>'required',
-
+        'phone_number' => 'required',
     ];
 
     public function sarch(){
-        $this->render();
+
     }
     public function render()
     {
@@ -46,6 +47,14 @@ class O71months extends Component
         return view('livewire.admin.o71months', ['o71months' => $o71months]);
     }
 
+    public function openAddModal()
+    {
+        $this->resetFields();
+        $this->editMode = false;
+        $this->viewMode = false;
+        $this->showModal = true;
+    }
+
     public function addO71month()
     {
         $this->validate();
@@ -53,7 +62,7 @@ class O71months extends Component
         O71month::create([
             'name_of_child' => $this->name_of_child,
             'name_of_parent' => $this->name_of_parent,
-            'date_of_birth' => $this->date_of_birth, // Ensure this is a valid date format
+            'date_of_birth' => $this->date_of_birth,
             'age_in_month' => $this->age_in_month,
             'weight' => $this->weight,
             'height' => $this->height,
@@ -63,24 +72,36 @@ class O71months extends Component
         ]);
 
         session()->flash('message', 'O71 Month added successfully.');
+        $this->showModal = false;
         $this->resetFields();
+    }
+
+    public function view($id)
+    {
+        $this->currentRecord = O71month::findOrFail($id);
+        $this->viewMode = true;
+        $this->showModal = true;
+        $this->editMode = false;
     }
 
     public function edit($id)
     {
-        $this->editMode = true;
         $o71month = O71month::findOrFail($id);
 
         $this->selectedId = $id;
         $this->name_of_child = $o71month->name_of_child;
         $this->name_of_parent = $o71month->name_of_parent;
-        $this->date_of_birth = $o71month->date_of_birth->format('Y-m-d'); // Convert to Y-m-d format
+        $this->date_of_birth = $o71month->date_of_birth->format('Y-m-d');
         $this->age_in_month = $o71month->age_in_month;
         $this->weight = $o71month->weight;
         $this->height = $o71month->height;
         $this->family_no = $o71month->family_no;
         $this->zone = $o71month->zone;
         $this->phone_number = $o71month->phone_number;
+
+        $this->editMode = true;
+        $this->viewMode = false;
+        $this->showModal = true;
     }
 
     public function updateO71month()
@@ -90,7 +111,7 @@ class O71months extends Component
         O71month::findOrFail($this->selectedId)->update([
             'name_of_child' => $this->name_of_child,
             'name_of_parent' => $this->name_of_parent,
-            'date_of_birth' => $this->date_of_birth, // Ensure this is a valid date format
+            'date_of_birth' => $this->date_of_birth,
             'age_in_month' => $this->age_in_month,
             'weight' => $this->weight,
             'height' => $this->height,
@@ -100,6 +121,7 @@ class O71months extends Component
         ]);
 
         session()->flash('message', 'O71 Month updated successfully.');
+        $this->showModal = false;
         $this->resetFields();
     }
 
@@ -113,7 +135,9 @@ class O71months extends Component
     {
         $this->reset([
             'name_of_child', 'name_of_parent', 'date_of_birth', 'age_in_month',
-            'weight', 'height', 'family_no', 'zone', 'editMode', 'selectedId', 'phone_number'
+            'weight', 'height', 'family_no', 'zone', 'phone_number',
+            'editMode', 'selectedId', 'viewMode', 'currentRecord'
         ]);
+        $this->resetErrorBag();
     }
 }

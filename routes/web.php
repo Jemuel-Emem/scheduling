@@ -79,6 +79,14 @@ Route::middleware([
             return view('admin.reschedule');
         })->name('admin.reschedule');
 
+        Route::get('/admin.masterlist', function(){
+            return view('admin.masterlist');
+        })->name('admin.masterlist');
+
+        Route::get('/admin.medical_record', function(){
+            return view('admin.medical_record');
+        })->name('admin.medical_record');
+
 
      });
 
