@@ -47,9 +47,87 @@ public function showMedicalRecords($id, $type)
     }
 }
 
+    // public function render()
+    // {
+    //     $query = Residents::query()
+    //         ->select(
+    //             'id',
+    //             'first_name',
+    //             'surname',
+    //             'date_of_birth',
+    //             'gender',
+    //             'phone_number',
+    //             DB::raw("'resident' as type")
+    //         );
+
+    //     // Union with other tables
+    //     $o71months = O71months::query()
+    //         ->select(
+    //             'id',
+    //             'name_of_child as first_name',
+    //             'name_of_parent as surname',
+    //             'date_of_birth',
+    //             DB::raw("'' as gender"),
+    //             'phone_number',
+    //             DB::raw("'o71month' as type")
+    //         );
+
+    //     $pregnancies = Pregnancy::query()
+    //         ->select(
+    //             'id',
+    //             'name as first_name',
+    //             DB::raw("'' as surname"),
+    //             'date_of_birth',
+    //             DB::raw("'' as gender"),
+    //             'mobile_number as phone_number',
+    //             DB::raw("'pregnancy' as type")
+    //         );
+
+    //     $birthregistries = Birthregistry::query()
+    //         ->select(
+    //             'id',
+    //             'name_of_child as first_name',
+    //             'name_of_parent as surname',
+    //             'date_of_birth',
+    //             'gender',
+    //             'phone_number',
+    //             DB::raw("'birthregistry' as type")
+    //         );
+
+    //     $bpMonitorings = BpMonitoring::query()
+    //         ->select(
+    //             'id',
+    //             'resident_name as first_name',
+    //             DB::raw("'' as surname"),
+    //             DB::raw("'' as date_of_birth"),
+    //             DB::raw("'' as gender"),
+    //             'phone_number',
+    //             DB::raw("'bp_monitoring' as type")
+    //         );
+
+    //     $combinedQuery = $query->unionAll($o71months)
+    //         ->unionAll($pregnancies)
+    //         ->unionAll($birthregistries)
+    //         ->unionAll($bpMonitorings);
+
+    //     if ($this->search) {
+    //         $combinedQuery->where(function($q) {
+    //             $q->where('first_name', 'like', '%' . $this->search . '%')
+    //               ->orWhere('surname', 'like', '%' . $this->search . '%')
+    //               ->orWhere('phone_number', 'like', '%' . $this->search . '%');
+    //         });
+    //     }
+
+    //     $records = $combinedQuery->orderBy('first_name')->paginate(10);
+
+    //     return view('livewire.admin.masterlist', [
+    //         'records' => $records
+    //     ]);
+    // }
     public function render()
     {
-        $query = Residents::query()
+        // Individual queries with standardized columns
+        $residents = Residents::query()
             ->select(
                 'id',
                 'first_name',
@@ -60,7 +138,6 @@ public function showMedicalRecords($id, $type)
                 DB::raw("'resident' as type")
             );
 
-        // Union with other tables
         $o71months = O71months::query()
             ->select(
                 'id',
@@ -105,20 +182,25 @@ public function showMedicalRecords($id, $type)
                 DB::raw("'bp_monitoring' as type")
             );
 
-        $combinedQuery = $query->unionAll($o71months)
+        // Combine all queries using unionAll
+        $combinedQuery = $residents
+            ->unionAll($o71months)
             ->unionAll($pregnancies)
             ->unionAll($birthregistries)
             ->unionAll($bpMonitorings);
 
-        if ($this->search) {
-            $combinedQuery->where(function($q) {
-                $q->where('first_name', 'like', '%' . $this->search . '%')
-                  ->orWhere('surname', 'like', '%' . $this->search . '%')
-                  ->orWhere('phone_number', 'like', '%' . $this->search . '%');
-            });
-        }
-
-        $records = $combinedQuery->orderBy('first_name')->paginate(10);
+        // Wrap in DB::table(...) to allow further filtering and pagination
+        $records = DB::table(DB::raw("({$combinedQuery->toSql()}) as sub"))
+            ->mergeBindings($combinedQuery->getQuery()) // bind parameters
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('first_name', 'like', '%' . $this->search . '%')
+                      ->orWhere('surname', 'like', '%' . $this->search . '%')
+                      ->orWhere('phone_number', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->orderBy('first_name')
+            ->paginate(10);
 
         return view('livewire.admin.masterlist', [
             'records' => $records

@@ -10,7 +10,7 @@ class Medicine extends Component
 {
     use WithPagination;
 
-    public $medicine_id, $name, $type, $description, $stocks ,$expiration_date;
+    public $medicine_id, $name, $type, $description, $stocks ,$expiration_date, $expiration_month;
     public $medicineToEdit = null;
 
 
@@ -22,6 +22,7 @@ class Medicine extends Component
             'description' => 'nullable|max:500',
             'stocks' => 'required|integer|min:0',
             'expiration_date' => 'required|integer|min:0',
+            'expiration_month' => 'required',
         ];
 
 
@@ -48,6 +49,7 @@ class Medicine extends Component
         $this->description = '';
         $this->stocks = '';
         $this->expiration_date = '';
+        $this->expiration_month = '';
 
         $this->medicineToEdit = null;
     }
@@ -81,6 +83,7 @@ class Medicine extends Component
         $this->description = $medicine->description;
         $this->stocks = $medicine->stocks;
         $this->expiration_date = $medicine->expiration_date;
+        $this->expiration_month = $medicine->expiration_month;
     }
 
     public function deleteMedicine(Med $medicine)

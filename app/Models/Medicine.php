@@ -15,6 +15,7 @@ class Medicine extends Model
         'type',
         'description',
         'stocks',
-        'expiration_date'
+        'expiration_date',
+        'expiration_month'
     ];
 }

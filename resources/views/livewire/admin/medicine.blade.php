@@ -45,6 +45,12 @@
                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm">
                 @error('expiration_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
+            <div>
+                <label for="expiration_month" class="block text-sm font-semibold text-gray-700">Expiration (Month)</label>
+                <input wire:model="expiration_month" id="expiration_month" type="text" placeholder="Enter expiration month"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 shadow-sm">
+                @error('expiration_month') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
 
             <div class="col-span-2">
                 <label for="description" class="block text-sm font-semibold text-gray-700">Description</label>
@@ -72,7 +78,8 @@
                         <th class="py-3 px-4 text-left">Name</th>
                         <th class="py-3 px-4 text-left">Type</th>
                         <th class="py-3 px-4 text-left">Stocks</th>
-                        <th class="py-3 px-4 text-left">Expiration</th>
+                        <th class="py-3 px-4 text-left">Expiration Month</th>
+                        <th class="py-3 px-4 text-left">Expiration Year</th>
 
                         <th class="py-3 px-4 text-center">Actions</th>
                     </tr>
@@ -84,6 +91,7 @@
                             <td class="py-3 px-4 border-b">{{ $medicine->name }}</td>
                             <td class="py-3 px-4 border-b">{{ $medicine->type }}</td>
                             <td class="py-3 px-4 border-b">{{ $medicine->stocks }}</td>
+                            <td class="py-3 px-4 border-b">{{ $medicine->expiration_month }}</td>
                             <td class="py-3 px-4 border-b">{{ $medicine->expiration_date }}</td>
 
                             <td class="py-3 px-4 border-b text-center">
