@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('level', ['normal', 'elevated', 'high', 'low']);
             $table->date('date');
             $table->string('phone_number');
+            $table->date('date_of_birth'); // ✅ added
+            $table->enum('gender', ['male', 'female', 'other']);
             $table->timestamps();
         });
     }

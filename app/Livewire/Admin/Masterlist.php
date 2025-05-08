@@ -171,16 +171,17 @@ public function showMedicalRecords($id, $type)
                 DB::raw("'birthregistry' as type")
             );
 
-        $bpMonitorings = BpMonitoring::query()
+            $bpMonitorings = BpMonitoring::query()
             ->select(
                 'id',
                 'resident_name as first_name',
                 DB::raw("'' as surname"),
-                DB::raw("'' as date_of_birth"),
-                DB::raw("'' as gender"),
+                'date_of_birth', // <-- Actual column
+                'gender',        // <-- Actual column
                 'phone_number',
                 DB::raw("'bp_monitoring' as type")
             );
+
 
         // Combine all queries using unionAll
         $combinedQuery = $residents

@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class Bp extends Component
 {
     use WithPagination;
+    public $dob, $gender;
 
     public $resident_name, $age, $phone_number, $bp, $level, $date;
     public $bp_id, $editMode = false;
@@ -23,7 +24,9 @@ class Bp extends Component
         'bp' => 'required|string|max:50',
         'level' => 'required|string|in:normal,elevated,high,low',
         'date' => 'required|date',
-        'phone_number' => 'required'
+        'phone_number' => 'required',
+        'dob' => 'nullable|date',
+        'gender' => 'nullable|in:male,female,other',
     ];
 
     public function render()
@@ -57,6 +60,8 @@ class Bp extends Component
                 'level' => $this->level,
                 'date' => $this->date,
                 'phone_number' => $this->phone_number,
+                'date_of_birth' => $this->dob,
+                'gender' => $this->gender,
             ]);
             session()->flash('success', 'BP Monitoring data updated successfully.');
         } else {
@@ -67,6 +72,8 @@ class Bp extends Component
                 'level' => $this->level,
                 'date' => $this->date,
                 'phone_number' => $this->phone_number,
+                'date_of_birth' => $this->dob,
+                'gender' => $this->gender,
             ]);
             session()->flash('success', 'BP Monitoring data added successfully.');
         }
@@ -94,6 +101,8 @@ class Bp extends Component
         $this->level = $bpMonitoring->level;
         $this->date = $bpMonitoring->date;
         $this->phone_number = $bpMonitoring->phone_number;
+        $this->dob = $bpMonitoring->date_of_birth;
+        $this->gender = $bpMonitoring->gender;
 
         $this->editMode = true;
         $this->viewMode = false;
@@ -110,7 +119,8 @@ class Bp extends Component
     {
         $this->reset([
             'resident_name', 'age', 'phone_number', 'bp',
-            'level', 'date', 'bp_id', 'editMode', 'viewMode', 'currentRecord'
+            'level', 'date', 'bp_id', 'editMode', 'viewMode', 'currentRecord',
+            'dob', 'gender'
         ]);
         $this->resetErrorBag();
     }

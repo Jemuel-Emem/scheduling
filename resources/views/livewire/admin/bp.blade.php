@@ -27,6 +27,8 @@
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-left">Resident Name</th>
                     <th class="py-3 px-6 text-left">Age</th>
+                    <th class="py-3 px-6 text-left">Gender </th>
+                    <th class="py-3 px-6 text-left">Date Of Birth </th>
                     <th class="py-3 px-6 text-left">BP</th>
                     <th class="py-3 px-6 text-left">Level</th>
                     <th class="py-3 px-6 text-left">Date</th>
@@ -38,6 +40,8 @@
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->resident_name }}</td>
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->age }}</td>
+                        <td class="py-3 px-6 text-left">{{ $bp_monitoring->gender }}</td>
+                        <td class="py-3 px-6 text-left">{{ $bp_monitoring->date_of_birth }}</td>
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->bp }}</td>
                         <td class="py-3 px-6 text-left">{{ ucfirst($bp_monitoring->level) }}</td>
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->date }}</td>
@@ -84,6 +88,9 @@
                         <div><strong>Blood Pressure:</strong> {{ $currentRecord->bp }}</div>
                         <div><strong>BP Level:</strong> {{ ucfirst($currentRecord->level) }}</div>
                         <div><strong>Date:</strong> {{ $currentRecord->date }}</div>
+                        <div><strong>Gender:</strong> {{ ucfirst($currentRecord->gender) }}</div>
+<div><strong>Date of Birth:</strong> {{ $currentRecord->date_of_birth }}</div>
+
                     </div>
 
                     <div class="mt-6 flex justify-end">
@@ -108,6 +115,23 @@
                                 <input type="number" wire:model.defer="age" id="age"
                                        class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Enter age">
                                 @error('age') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label for="gender" class="block text-gray-700 font-medium mb-2">Gender</label>
+                                <select wire:model.defer="gender" id="gender" class="w-full p-2 border border-gray-300 rounded-lg">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                @error('gender') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label for="dob" class="block text-gray-700 font-medium mb-2">Date of Birth</label>
+                                <input type="date" wire:model.defer="dob" id="dob"
+                                       class="w-full p-2 border border-gray-300 rounded-lg">
+                                @error('dob') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
