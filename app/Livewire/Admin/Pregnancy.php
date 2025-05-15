@@ -9,13 +9,14 @@ class Pregnancy extends Component
 {
     use WithPagination;
 
-    public $name, $date_of_birth, $age, $family_no, $zone, $mobile_number, $estimated_due_date, $last_checkup, $child_name;
+    public $name, $date_of_birth, $age, $family_no, $zone, $mobile_number, $estimated_due_date, $last_checkup, $child_name,$gender;
     public $editMode = false, $pregnancyId;
     public $search = '';
     public $showModal = false;
     public $viewMode = false;
     public $currentRecord;
-
+    public $is_desease = false;
+    public $status;
     protected $rules = [
         'name' => 'required|string|max:255',
         'date_of_birth' => 'required|date',
@@ -24,6 +25,9 @@ class Pregnancy extends Component
         'zone' => 'required|string|max:255',
         'mobile_number' => 'required|string|max:20',
         'estimated_due_date' => 'required|date',
+        'status' => 'required',
+        'is_desease' => 'nullable|boolean',
+        'gender' => 'required|in:Male,Female',
     ];
 
     public function render()
@@ -58,6 +62,9 @@ class Pregnancy extends Component
             'estimated_due_date' => $this->estimated_due_date,
             'last_checkup' => $this->last_checkup,
             'child_name' => $this->child_name,
+            'status' => $this->status,
+            'is_desease' => $this->is_desease,
+            'gender' => $this->gender,
         ]);
 
         session()->flash('message', 'Pregnancy record added successfully!');
@@ -79,6 +86,7 @@ class Pregnancy extends Component
 
         $this->pregnancyId = $id;
         $this->name = $pregnancy->name;
+
         $this->date_of_birth = $pregnancy->date_of_birth;
         $this->age = $pregnancy->age;
         $this->family_no = $pregnancy->family_no;
@@ -87,7 +95,9 @@ class Pregnancy extends Component
         $this->estimated_due_date = $pregnancy->estimated_due_date;
         $this->last_checkup = $pregnancy->last_checkup;
         $this->child_name = $pregnancy->child_name;
-
+        $this->gender = $pregnancy->gender;
+        $this->status = $pregnancy->status;
+        $this->is_desease = $pregnancy->is_desease ?? false;
         $this->editMode = true;
         $this->viewMode = false;
         $this->showModal = true;
@@ -107,6 +117,9 @@ class Pregnancy extends Component
             'estimated_due_date' => $this->estimated_due_date,
             'last_checkup' => $this->last_checkup,
             'child_name' => $this->child_name,
+            'status' => $this->status,
+            'is_desease' => $this->is_desease,
+            'gender' => $this->gender,
         ]);
 
         session()->flash('message', 'Pregnancy record updated successfully!');
@@ -125,7 +138,7 @@ class Pregnancy extends Component
         $this->reset([
             'name', 'date_of_birth', 'age', 'family_no', 'zone',
             'mobile_number', 'estimated_due_date', 'last_checkup', 'child_name',
-            'editMode', 'pregnancyId', 'viewMode', 'currentRecord'
+            'editMode','gender', 'pregnancyId', 'viewMode', 'currentRecord','is_desease','status',
         ]);
         $this->resetErrorBag();
     }

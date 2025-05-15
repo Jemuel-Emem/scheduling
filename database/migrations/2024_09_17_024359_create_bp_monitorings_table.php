@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('phone_number');
             $table->date('date_of_birth'); // ✅ added
             $table->enum('gender', ['male', 'female', 'other']);
+            $table->string('status')->default('null');
+            $table->boolean('is_desease')->nullable();
             $table->timestamps();
         });
     }

@@ -32,6 +32,7 @@
                     <th class="py-3 px-6 text-left">BP</th>
                     <th class="py-3 px-6 text-left">Level</th>
                     <th class="py-3 px-6 text-left">Date</th>
+                    <th class="py-3 px-6 text-left">Status</th>
                     <th class="py-3 px-6 text-center">Actions</th>
                 </tr>
             </thead>
@@ -45,6 +46,7 @@
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->bp }}</td>
                         <td class="py-3 px-6 text-left">{{ ucfirst($bp_monitoring->level) }}</td>
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->date }}</td>
+                        <td class="py-3 px-6 text-left">{{ $bp_monitoring->status}}</td>
                         <td class="py-3 px-6 text-center">
                             <button wire:click="view({{ $bp_monitoring->id }})" class="text-green-600 hover:text-green-900 mr-4">View</button>
                             <button wire:click="edit({{ $bp_monitoring->id }})" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
@@ -167,6 +169,22 @@
                                        class="w-full p-2 border border-gray-300 rounded-lg">
                                 @error('date') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                                <input type="text" id="status" wire:model.defer="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Add this to your form grid, after the status field -->
+        <div class="col-span-2">
+            <div class="flex items-center">
+                <input type="checkbox" id="is_desease" wire:model.defer="is_desease" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <label for="is_desease" class="ml-2 block text-sm text-gray-700">
+                    Deceased
+                </label>
+            </div>
+            @error('is_desease') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
                         </div>
 
                         <div class="mt-6 flex justify-end space-x-4">

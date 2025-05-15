@@ -13,7 +13,6 @@ class Medicine extends Component
     public $medicine_id, $name, $type, $description, $stocks ,$expiration_date, $expiration_month;
     public $medicineToEdit = null;
 
-
     protected function rules()
     {
         $rules = [

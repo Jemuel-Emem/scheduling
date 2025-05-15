@@ -16,7 +16,9 @@ class O71months extends Component
     public $showModal = false;
     public $viewMode = false;
     public $currentRecord;
-
+    public $is_desease = false;
+    public $status;
+    public $gender;
     protected $rules = [
         'name_of_child' => 'required|string|max:255',
         'name_of_parent' => 'required|string|max:255',
@@ -27,6 +29,9 @@ class O71months extends Component
         'family_no' => 'required|integer',
         'zone' => 'required|string|max:255',
         'phone_number' => 'required',
+        'status' => 'required',
+        'is_desease' => 'nullable|boolean',
+        'gender' => 'required|in:Male,Female',
     ];
 
     public function sarch(){
@@ -69,6 +74,9 @@ class O71months extends Component
             'family_no' => $this->family_no,
             'zone' => $this->zone,
             'phone_number' => $this->phone_number,
+            'status' => $this->status,
+            'is_desease' => $this->is_desease,
+            'gender' =>$this->gender
         ]);
 
         session()->flash('message', 'O71 Month added successfully.');
@@ -98,7 +106,9 @@ class O71months extends Component
         $this->family_no = $o71month->family_no;
         $this->zone = $o71month->zone;
         $this->phone_number = $o71month->phone_number;
-
+        $this->status = $o71month->status;
+        $this->gender = $o71month->gender;
+        $this->is_desease = $o71month->is_desease ?? false;
         $this->editMode = true;
         $this->viewMode = false;
         $this->showModal = true;
@@ -118,6 +128,9 @@ class O71months extends Component
             'family_no' => $this->family_no,
             'zone' => $this->zone,
             'phone_number' => $this->phone_number,
+            'status' => $this->status,
+            'is_desease' => $this->is_desease,
+            'gender' => $this->gender,
         ]);
 
         session()->flash('message', 'O71 Month updated successfully.');
@@ -136,7 +149,7 @@ class O71months extends Component
         $this->reset([
             'name_of_child', 'name_of_parent', 'date_of_birth', 'age_in_month',
             'weight', 'height', 'family_no', 'zone', 'phone_number',
-            'editMode', 'selectedId', 'viewMode', 'currentRecord'
+            'editMode', 'selectedId','gender', 'viewMode', 'currentRecord','is_desease','status',
         ]);
         $this->resetErrorBag();
     }

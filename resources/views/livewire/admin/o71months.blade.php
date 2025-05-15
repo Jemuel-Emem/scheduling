@@ -30,6 +30,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name of Parent</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age in Months</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
@@ -40,6 +41,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->name_of_parent }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->date_of_birth->format('Y-m-d') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->age_in_month }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->status }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button wire:click="view({{ $o71month->id }})" class="text-green-600 hover:text-green-900 mr-4">View</button>
                             <button wire:click="edit({{ $o71month->id }})" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
@@ -130,7 +132,15 @@
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                 @error('height') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
-
+                            <div>
+                                <label for="gender" class="block text-sm font-medium text-gray-700">Gender *</label>
+                                <select id="gender" wire:model.defer="gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                @error('gender') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
                             <div>
                                 <label for="family_no" class="block text-sm font-medium text-gray-700">Family No *</label>
                                 <input type="number" id="family_no" wire:model.defer="family_no"
@@ -151,6 +161,23 @@
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                 @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
+
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                                <input type="text" id="status" wire:model.defer="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Add this to your form grid, after the status field -->
+        <div class="col-span-2">
+            <div class="flex items-center">
+                <input type="checkbox" id="is_desease" wire:model.defer="is_desease" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <label for="is_desease" class="ml-2 block text-sm text-gray-700">
+                    Deceased
+                </label>
+            </div>
+            @error('is_desease') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
                         </div>
 
                         <div class="mt-6 flex justify-end space-x-4">

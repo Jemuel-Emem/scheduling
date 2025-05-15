@@ -18,6 +18,7 @@ class Appointments extends Component
     public $viewMode = false;
     public $currentRecord;
 
+    public $existingAppointment = null;
     protected $rules = [
         'name' => 'required|string|max:255',
         'phone' => 'required|numeric',
@@ -32,7 +33,26 @@ class Appointments extends Component
         'health_status' => 'nullable|string',
         'blood_pressure' => 'nullable|string',
     ];
+    public function checkExistingAppointment()
+    {
+        if (strlen($this->name) > 3) {
+            $this->existingAppointment = Appointment::where('full_name', 'like', '%'.$this->name.'%')
+                ->latest()
+                ->first();
+        } else {
+            $this->existingAppointment = null;
+        }
+    }
 
+    public function useExistingInfo()
+    {
+        if ($this->existingAppointment) {
+            $this->phone = $this->existingAppointment->phone;
+            $this->age = $this->existingAppointment->age;
+            $this->address = $this->existingAppointment->address;
+            $this->existingAppointment = null; // Hide the info box after using the data
+        }
+    }
     public function openAddModal()
     {
         $this->resetFields();

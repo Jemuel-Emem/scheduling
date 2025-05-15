@@ -18,6 +18,9 @@ class Bp extends Component
     public $currentRecord;
     public $search = '';
 
+    public $is_desease = false;
+    public $status;
+
     protected $rules = [
         'resident_name' => 'required|string|max:255',
         'age' => 'required|integer|min:0',
@@ -27,6 +30,8 @@ class Bp extends Component
         'phone_number' => 'required',
         'dob' => 'nullable|date',
         'gender' => 'nullable|in:male,female,other',
+        'status' => 'required',
+        'is_desease' => 'nullable|boolean',
     ];
 
     public function render()
@@ -62,6 +67,8 @@ class Bp extends Component
                 'phone_number' => $this->phone_number,
                 'date_of_birth' => $this->dob,
                 'gender' => $this->gender,
+                'status' => $this->status,
+                'is_desease' => $this->is_desease,
             ]);
             session()->flash('success', 'BP Monitoring data updated successfully.');
         } else {
@@ -74,6 +81,9 @@ class Bp extends Component
                 'phone_number' => $this->phone_number,
                 'date_of_birth' => $this->dob,
                 'gender' => $this->gender,
+                'status' => $this->status,
+                'is_desease' => $this->is_desease,
+
             ]);
             session()->flash('success', 'BP Monitoring data added successfully.');
         }
@@ -103,7 +113,8 @@ class Bp extends Component
         $this->phone_number = $bpMonitoring->phone_number;
         $this->dob = $bpMonitoring->date_of_birth;
         $this->gender = $bpMonitoring->gender;
-
+        $this->status = $bpMonitoring->status;
+        $this->is_desease = $bpMonitoring->is_desease ?? false;
         $this->editMode = true;
         $this->viewMode = false;
         $this->showModal = true;
@@ -119,7 +130,7 @@ class Bp extends Component
     {
         $this->reset([
             'resident_name', 'age', 'phone_number', 'bp',
-            'level', 'date', 'bp_id', 'editMode', 'viewMode', 'currentRecord',
+            'level', 'date', 'bp_id', 'editMode', 'viewMode', 'currentRecord','is_desease','status',
             'dob', 'gender'
         ]);
         $this->resetErrorBag();

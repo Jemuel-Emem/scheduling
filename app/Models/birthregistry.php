@@ -20,5 +20,7 @@ class birthregistry extends Model
         'place_of_birth',
         'is_registered',
         'phone_number',
+          'status',
+        'is_desease'
     ];
 }

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->integer('family_number');
             $table->string('zone_or_purok');
             $table->string('phone_number');
+            $table->string('status')->default('null');
+            $table->boolean('is_desease')->nullable();
             $table->timestamps();
         });
 

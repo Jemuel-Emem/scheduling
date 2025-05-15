@@ -17,6 +17,9 @@ class bp_monitoring extends Model
         'level',
         'date',
         'phone_number',
+        'status',
+          'status',
+        'is_desease'
     ];
 
 }

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('place_of_birth');
             $table->boolean('is_registered')->default(false);
             $table->string('phone_number');
+            $table->string('status')->default('null');
+            $table->boolean('is_desease')->nullable();
             $table->timestamps();
         });
     }

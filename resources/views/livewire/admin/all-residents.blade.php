@@ -1,5 +1,5 @@
 <div class="max-w-8xl mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold mb-4">Residents Management</h2>
+    <h2 class="text-2xl font-semibold mb-4">All Residents</h2>
 
     @if (session()->has('message'))
         <div class="bg-green-500 text-white p-4 rounded mb-4">
@@ -21,34 +21,94 @@
     </div>
 
     <!-- Residents Table -->
-    <div class="overflow-x-auto ml-8">
+    <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Surname</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Middle Name</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
+                    {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th> --}}
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> Current Status</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach($residents as $resident)
+                @foreach($residents as $record)
                     <tr>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $resident->surname }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ $resident->first_name }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ $resident->middle_name }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ $resident->date_of_birth->format('M d, Y') }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $record->full_name }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">
+                            @if($record->date_of_birth)
+                                {{ \Carbon\Carbon::parse($record->date_of_birth)->format('M d, Y') }}
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ $record->gender }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ $record->phone_number }}</td>
+                        {{-- <td class="px-6 py-4 text-sm text-gray-500 capitalize">
+                            {{ ucwords(str_replace('_', ' ', $record->type)) }}
+                        </td> --}}
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ $record->status }}</td>
+                        {{-- <td class="px-6 py-4 text-sm font-medium">
+
+                            @if($record->type === 'resident')
+                            <button wire:click="view({{ $record->id }}, '{{ $record->type }}')"
+                                class="text-blue-600 hover:text-blue-900 mr-2">
+                            View
+                        </button>
+                                <button wire:click="edit({{ $record->id }})"
+                                        class="text-green-600 hover:text-green-900 mr-2">
+                                    Edit
+                                </button>
+                                <button wire:click="delete({{ $record->id }})"
+                                        class="text-red-600 hover:text-red-900">
+                                    Delete
+                                </button>
+                            @endif
+                        </td> --}}
+
                         <td class="px-6 py-4 text-sm font-medium">
-                            <button wire:click="view({{ $resident->id }})" class="text-green-600 hover:text-green-900 mr-4">View</button>
-                            <button wire:click="edit({{ $resident->id }})" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
-                            <button wire:click="delete({{ $resident->id }})" class="text-red-600 hover:text-red-900">Delete</button>
+                            @if($record->type === 'resident')
+                                <button wire:click="view({{ $record->id }}, '{{ $record->type }}')"
+                                    class="text-blue-600 hover:text-blue-900 mr-2">
+                                    View
+                                </button>
+                                <button wire:click="edit({{ $record->id }})"
+                                        class="text-green-600 hover:text-green-900 mr-2">
+                                    Edit
+                                </button>
+                                <button wire:click="delete({{ $record->id }})"
+                                        class="text-red-600 hover:text-red-900">
+                                    Delete
+                                </button>
+                            @elseif($record->type === 'o71month')
+                                <a href="{{ route('months') }}"
+                                   class="text-blue-600 hover:text-blue-900 mr-2">
+                                    Open 071 months records
+                                </a>
+                            @elseif($record->type === 'pregnancy')
+                                <a href="{{ route('admin.pregnancy') }}"
+                                   class="text-blue-600 hover:text-blue-900 mr-2">
+                                    Open pregnants records
+                                </a>
+                            @elseif($record->type === 'birthregistry')
+                                <a href="{{ route('admin.pregnancy') }}"
+                                   class="text-blue-600 hover:text-blue-900 mr-2">
+                                    Open Pregnancy Records
+                                </a>
+                            @elseif($record->type === 'bp_monitoring')
+                                <a href="{{ route('bps') }}"
+                                   class="text-blue-600 hover:text-blue-900 mr-2">
+                                    Open Bp Monitoring Records
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
 
     <div class="mt-4">
         {{ $residents->links() }}
@@ -168,6 +228,23 @@
                         <input type="text" id="zone_or_purok" wire:model.defer="zone_or_purok" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                         @error('zone_or_purok') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
+
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                        <input type="text" id="status" wire:model.defer="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                        @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- Add this to your form grid, after the status field -->
+<div class="col-span-2">
+    <div class="flex items-center">
+        <input type="checkbox" id="is_desease" wire:model.defer="is_desease" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+        <label for="is_desease" class="ml-2 block text-sm text-gray-700">
+            Deceased
+        </label>
+    </div>
+    @error('is_desease') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+</div>
                 </div>
 
                 <div class="mt-6 flex justify-end space-x-4">
@@ -200,13 +277,16 @@
                 <div><strong>Gender:</strong> {{ $viewingResident->gender }}</div>
                 <div><strong>Place of Birth:</strong> {{ $viewingResident->place_of_birth }}</div>
                 <div><strong>Relationship:</strong> {{ $viewingResident->relationship_with_family_head }}</div>
-                <div><strong>Status:</strong> {{ $viewingResident->civil_status }}</div>
+                <div><strong>Civil Status:</strong> {{ $viewingResident->civil_status }}</div>
                 <div><strong>Occupation:</strong> {{ $viewingResident->occupation }}</div>
                 <div><strong>Religion:</strong> {{ $viewingResident->religion }}</div>
                 <div><strong>Citizenship:</strong> {{ $viewingResident->citizenship }}</div>
                 <div><strong>Family No.:</strong> {{ $viewingResident->family_number }}</div>
                 <div><strong>Zone/Purok:</strong> {{ $viewingResident->zone_or_purok }}</div>
-            @endif
+                <div><strong>Status:</strong> {{ $viewingResident->status }}</div>
+
+<div><strong>Diseased:</strong> {{ $viewingResident->is_desease ? 'Yes' : 'No' }}</div>
+                @endif
         </div>
 
         <div class="mt-6 text-right">

@@ -20,6 +20,9 @@ class pregnancy extends Model
         'estimated_due_date',
         'last_checkup',
         'child_name',
+        'status',
+        'gender',
+        'is_desease'
     ];
 
     protected $casts = [

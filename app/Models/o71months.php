@@ -18,6 +18,10 @@ class o71months extends Model
         'family_no',
         'zone',
         'phone_number',
+          'status',
+        'is_desease',
+        'gender',
+
     ];
 
     protected $casts = [

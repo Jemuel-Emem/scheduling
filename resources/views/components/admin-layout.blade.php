@@ -158,7 +158,7 @@
                     <a href="{{ route('admin.masterlist') }}"
                         class="flex items-center p-2 text-white hover:text-light-yellow rounded-lg group hover:bg-dark-yellow hover:text-light-yellow">
                         <i class="ri-megaphone-fill text-blue-500"></i>
-                        <span class="ml-10 ms-3 ">Master Lists</span>
+                        <span class="ml-10 ms-3 ">Resident History</span>
                     </a>
                 </li>
                 <li>
@@ -213,7 +213,7 @@
                         <li>
                             <a href="{{ route('res') }}"
                                 class="flex items-center w-full p-2 text-white rounded-lg pl-9 group hover:bg-dark-yellow hover:text-light-yellow">
-                                All Residents
+                          All Residents
                             </a>
                         </li>
                         <li>

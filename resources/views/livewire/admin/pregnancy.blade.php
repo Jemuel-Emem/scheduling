@@ -28,6 +28,7 @@
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Zone</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
@@ -37,6 +38,7 @@
                         <td class="px-6 py-4 text-sm text-center text-gray-900">{{ $pregnancy->name }}</td>
                         <td class="px-6 py-4 text-sm text-center text-gray-500">{{ $pregnancy->zone }}</td>
                         <td class="px-6 py-4 text-sm text-center text-gray-500">{{ \Carbon\Carbon::parse($pregnancy->estimated_due_date)->format('Y-m-d') }}</td>
+                        <td class="px-6 py-4 text-sm text-center text-gray-500">{{ $pregnancy->status }}</td>
                         <td class="px-6 py-4 text-sm text-center flex space-x-2 justify-center">
                             <button wire:click="view({{ $pregnancy->id }})" class="text-green-600 hover:text-green-900">View</button>
                             <button wire:click="editPregnancy({{ $pregnancy->id }})" class="text-blue-600 hover:text-blue-900">Edit</button>
@@ -157,6 +159,32 @@
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                 @error('child_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
+
+                            <div>
+                                <label for="gender" class="block text-sm font-medium text-gray-700">Gender *</label>
+                                <select id="gender" wire:model.defer="gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                @error('gender') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                                <input type="text" id="status" wire:model.defer="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Add this to your form grid, after the status field -->
+        <div class="col-span-2">
+            <div class="flex items-center">
+                <input type="checkbox" id="is_desease" wire:model.defer="is_desease" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <label for="is_desease" class="ml-2 block text-sm text-gray-700">
+                    Deceased
+                </label>
+            </div>
+            @error('is_desease') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
                         </div>
 
                         <div class="mt-6 flex justify-end space-x-4">

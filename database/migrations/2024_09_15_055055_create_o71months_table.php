@@ -22,6 +22,9 @@ return new class extends Migration
             $table->integer('family_no');
             $table->string('zone');
             $table->string('phone_number');
+            $table->string('status')->default('null');
+            $table->boolean('is_desease')->nullable();
+            $table->enum('gender', ['Male', 'Female']);
             $table->timestamps();
         });
     }

@@ -24,5 +24,7 @@ class residents extends Model
         'family_number',
         'zone_or_purok',
         'phone_number',
+        'status',
+        'is_desease'
     ];
 }

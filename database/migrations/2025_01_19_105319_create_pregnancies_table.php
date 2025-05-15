@@ -22,6 +22,9 @@ return new class extends Migration
             $table->date('estimated_due_date');
             $table->date('last_checkup')->nullable();
             $table->string('child_name')->nullable();
+            $table->string('status')->default('null');
+            $table->boolean('is_desease')->nullable();
+            $table->enum('gender', ['Male', 'Female']);
             $table->timestamps();
         });
     }

@@ -16,6 +16,9 @@ class Birthregistry extends Component
     public $viewMode = false;
     public $currentRecord;
 
+    public $is_desease = false;
+    public $status;
+
     protected $rules = [
         'name_of_child' => 'required|string|max:255',
         'name_of_parent' => 'required|string|max:255',
@@ -26,7 +29,9 @@ class Birthregistry extends Component
         'birth_weight' => 'required|numeric',
         'place_of_birth' => 'required|string|max:255',
         'is_registered' => 'required|boolean',
-        'phone_number' => 'required'
+        'phone_number' => 'required',
+        'status' => 'required',
+        'is_desease' => 'nullable|boolean',
     ];
 
     public function render()
@@ -61,7 +66,9 @@ class Birthregistry extends Component
             'birth_weight' => $this->birth_weight,
             'place_of_birth' => $this->place_of_birth,
             'is_registered' => $this->is_registered,
-            'phone_number' => $this->phone_number
+            'phone_number' => $this->phone_number,
+            'status' => $this->status,
+            'is_desease' => $this->is_desease,
         ]);
 
         session()->flash('message', 'Birth Registry Record Added Successfully!');
@@ -92,7 +99,8 @@ class Birthregistry extends Component
         $this->place_of_birth = $birthRegistry->place_of_birth;
         $this->is_registered = $birthRegistry->is_registered;
         $this->phone_number = $birthRegistry->phone_number;
-
+        $this->status = $birthRegistry->status;
+        $this->is_desease = $birthRegistry->is_desease ?? false;
         $this->editMode = true;
         $this->viewMode = false;
         $this->showModal = true;
@@ -113,6 +121,8 @@ class Birthregistry extends Component
             'place_of_birth' => $this->place_of_birth,
             'is_registered' => $this->is_registered,
             'phone_number' => $this->phone_number,
+            'status' => $this->status,
+            'is_desease' => $this->is_desease,
         ]);
 
         session()->flash('message', 'Birth Registry Record Updated Successfully!');
