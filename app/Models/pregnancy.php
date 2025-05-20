@@ -11,6 +11,7 @@ class pregnancy extends Model
 
 
     protected $fillable = [
+        'id_number',
         'name',
         'date_of_birth',
         'age',

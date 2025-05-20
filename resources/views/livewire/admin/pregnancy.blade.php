@@ -29,7 +29,7 @@
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Zone</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
                     <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    {{-- <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -39,11 +39,11 @@
                         <td class="px-6 py-4 text-sm text-center text-gray-500">{{ $pregnancy->zone }}</td>
                         <td class="px-6 py-4 text-sm text-center text-gray-500">{{ \Carbon\Carbon::parse($pregnancy->estimated_due_date)->format('Y-m-d') }}</td>
                         <td class="px-6 py-4 text-sm text-center text-gray-500">{{ $pregnancy->status }}</td>
-                        <td class="px-6 py-4 text-sm text-center flex space-x-2 justify-center">
+                        {{-- <td class="px-6 py-4 text-sm text-center flex space-x-2 justify-center">
                             <button wire:click="view({{ $pregnancy->id }})" class="text-green-600 hover:text-green-900">View</button>
                             <button wire:click="editPregnancy({{ $pregnancy->id }})" class="text-blue-600 hover:text-blue-900">Edit</button>
                             <button wire:click="deletePregnancy({{ $pregnancy->id }})" class="text-red-600 hover:text-red-900">Delete</button>
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

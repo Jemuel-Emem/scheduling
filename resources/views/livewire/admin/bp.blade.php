@@ -33,7 +33,7 @@
                     <th class="py-3 px-6 text-left">Level</th>
                     <th class="py-3 px-6 text-left">Date</th>
                     <th class="py-3 px-6 text-left">Status</th>
-                    <th class="py-3 px-6 text-center">Actions</th>
+                    {{-- <th class="py-3 px-6 text-center">Actions</th> --}}
                 </tr>
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
@@ -47,11 +47,11 @@
                         <td class="py-3 px-6 text-left">{{ ucfirst($bp_monitoring->level) }}</td>
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->date }}</td>
                         <td class="py-3 px-6 text-left">{{ $bp_monitoring->status}}</td>
-                        <td class="py-3 px-6 text-center">
+                        {{-- <td class="py-3 px-6 text-center">
                             <button wire:click="view({{ $bp_monitoring->id }})" class="text-green-600 hover:text-green-900 mr-4">View</button>
                             <button wire:click="edit({{ $bp_monitoring->id }})" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
                             <button wire:click="delete({{ $bp_monitoring->id }})" class="text-red-600 hover:text-red-900">Delete</button>
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

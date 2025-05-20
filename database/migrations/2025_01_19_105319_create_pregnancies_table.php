@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pregnancies', function (Blueprint $table) {
             $table->id();
+            $table->string('id_number');
             $table->string('name');
             $table->date('date_of_birth');
             $table->integer('age');

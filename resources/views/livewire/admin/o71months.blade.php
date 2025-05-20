@@ -31,7 +31,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age in Months</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th> --}}
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -42,11 +42,11 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->date_of_birth->format('Y-m-d') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->age_in_month }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $o71month->status }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        {{-- <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button wire:click="view({{ $o71month->id }})" class="text-green-600 hover:text-green-900 mr-4">View</button>
                             <button wire:click="edit({{ $o71month->id }})" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
                             <button wire:click="delete({{ $o71month->id }})" class="text-red-600 hover:text-red-900">Delete</button>
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

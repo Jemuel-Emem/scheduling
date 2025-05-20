@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('birthregistries', function (Blueprint $table) {
             $table->id();
+             $table->string('id_number');
             $table->string('name_of_child');
             $table->string('name_of_parent');
             $table->date('date_of_birth');

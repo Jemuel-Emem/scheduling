@@ -9,6 +9,7 @@ class o71months extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id_number',
         'name_of_child',
         'name_of_parent',
         'date_of_birth',

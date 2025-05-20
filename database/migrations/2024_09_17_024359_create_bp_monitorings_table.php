@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('bp_monitorings', function (Blueprint $table) {
             $table->id();
+             $table->string('id_number');
             $table->string('resident_name');
             $table->integer('age');
             $table->string('bp');

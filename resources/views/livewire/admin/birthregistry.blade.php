@@ -31,7 +31,7 @@
                     <th class="py-2 px-4 border-b">Date of Birth</th>
                     <th class="py-2 px-4 border-b">Family No.</th>
                     <th class="py-2 px-4 border-b">Status</th>
-                    <th class="py-2 px-4 border-b">Actions</th>
+                    {{-- <th class="py-2 px-4 border-b">Actions</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -42,11 +42,11 @@
                         <td class="py-2 px-4 border-b text-center">{{ $record->date_of_birth }}</td>
                         <td class="py-2 px-4 border-b text-center">{{ $record->family_no }}</td>
                         <td class="py-2 px-4 border-b text-center">{{ $record->status}}</td>
-                        <td class="py-2 px-4 border-b text-center">
+                        {{-- <td class="py-2 px-4 border-b text-center">
                             <button wire:click="view({{ $record->id }})" class="text-green-600 hover:text-green-900 mr-4">View</button>
                             <button wire:click="edit({{ $record->id }})" class="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
                             <button wire:click="delete({{ $record->id }})" class="text-red-600 hover:text-red-900">Delete</button>
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

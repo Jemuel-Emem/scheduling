@@ -9,6 +9,7 @@ class bp_monitoring extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id_number',
         'resident_name',
         'age',
         'date_of_birth',   // ✅ added
