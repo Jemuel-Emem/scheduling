@@ -107,6 +107,11 @@
                 display: block;
             }
         }
+    #reschedule_date_container {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
     </style>
 
 
