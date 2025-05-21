@@ -16,9 +16,9 @@
                 </button>
 
                 </div>
-        <button wire:click="openAddModal" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        {{-- <button wire:click="openAddModal" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Add New Birth Record
-        </button>
+        </button> --}}
     </div>
 
     <!-- Birth Registry Table -->

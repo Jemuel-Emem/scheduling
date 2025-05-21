@@ -15,9 +15,9 @@
                     Search
                 </button>
                 </div>
-        <button wire:click="openAddModal" class="px-6 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600">
+        {{-- <button wire:click="openAddModal" class="px-6 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600">
             Add New BP Record
-        </button>
+        </button> --}}
     </div>
 
     <!-- BP Monitoring Records Table -->

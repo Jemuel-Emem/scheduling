@@ -16,9 +16,9 @@
                     Search
                 </button>
                 </div>
-        <button wire:click="openAddModal" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        {{-- <button wire:click="openAddModal" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Add New O71 Month
-        </button>
+        </button> --}}
     </div>
 
     <!-- O71 Months Table -->

@@ -70,6 +70,7 @@ class AllResidents extends Component
     public $is_registered;
         public $birthregistry_fam_number;
 public $b_date_of_birth;
+
     // BP Monitoring properties
        public $id_number3;
     public $bpMonitoringId;

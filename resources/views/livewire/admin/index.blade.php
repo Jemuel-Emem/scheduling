@@ -3,7 +3,7 @@
         <main>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                <!-- Residents Card -->
+                {{-- <!-- Residents Card -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
                     <div class="bg-gradient-to-r from-blue-400 to-blue-600 p-3 rounded-full text-white">
                         <i class="ri-group-2-fill text-2xl"></i>
@@ -12,7 +12,7 @@
                         <h2 class="text-lg font-bold text-blue-600">Number of Residents</h2>
                         <p class="text-3xl font-semibold mt-1 text-gray-800">{{ $residentCount }}</p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Appointments Card -->
                 <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">

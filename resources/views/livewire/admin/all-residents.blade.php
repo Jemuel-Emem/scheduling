@@ -443,10 +443,10 @@
                                 </div>
 
                                 <div>
-                                    <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth *</label>
-                                    <input type="date" id="date_of_birth" wire:model.defer="date_of_birth"
+                                    <label for="b_date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth *</label>
+                                    <input type="date" id="b_date_of_birth" wire:model.defer="b_date_of_birth"
                                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
-                                    @error('date_of_birth') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                    @error('b_date_of_birth') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                 </div>
 
                                 <div>
