@@ -188,7 +188,7 @@
                     </div>
                 @else
                     <!-- Add/Edit Mode -->
-                    <form wire:submit.prevent="{{ $editMode ? 'updateAppointment' : 'submitAppointment' }}">
+<form wire:submit.prevent="{{ $editMode ? 'updateAppointment' : 'submitAppointment' }}">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                              <div>

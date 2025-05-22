@@ -64,7 +64,7 @@ class AllResidents extends Component
       public $pregnancy_family_number;
 
     // Birth Registry properties
-       public $id_number2;
+   public $id_number2;
     public $birthRegistryId;
     public $birth_weight;
     public $is_registered;

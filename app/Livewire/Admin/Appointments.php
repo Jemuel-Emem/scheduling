@@ -27,7 +27,7 @@ class Appointments extends Component
     public $showExistingRecordInfo = false;
 
     protected $rules = [
-        'id_number' => 'required|string|max:255',
+
         'name' => 'required|string|max:255',
         'phone' => 'required|numeric',
         'age' => 'required|integer|min:1',
@@ -75,7 +75,7 @@ class Appointments extends Component
         }
     }
 
-    public function sarch(){
+    public function find(){
 
     }
     public function searchByIdNumber()
@@ -124,6 +124,7 @@ class Appointments extends Component
 
     public function submitAppointment()
     {
+
         $rules = $this->rules;
 
         if ($this->reschedule_option === 'date') {
@@ -133,7 +134,7 @@ class Appointments extends Component
         $this->validate($rules);
 
         $appointment = Appointment::create([
-            'id_number' => $this->id_number,
+
             'full_name' => $this->name,
             'phone' => $this->phone,
             'age' => $this->age,
@@ -168,7 +169,7 @@ class Appointments extends Component
         $appointment = Appointment::findOrFail($id);
 
         $this->appointmentId = $id;
-        $this->id_number = $appointment->id_number;
+
         $this->name = $appointment->full_name;
         $this->phone = $appointment->phone;
         $this->age = $appointment->age;
@@ -200,7 +201,7 @@ class Appointments extends Component
 
         $appointment = Appointment::find($this->appointmentId);
         $appointment->update([
-            'id_number' => $this->id_number,
+
             'full_name' => $this->name,
             'phone' => $this->phone,
             'age' => $this->age,
