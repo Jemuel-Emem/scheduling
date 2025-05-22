@@ -79,6 +79,298 @@ public $b_date_of_birth;
     public $level;
     public $date;
 
+
+    //for catefory properties
+    public $showTransferModal = false;
+public $transferRecordId;
+public $transferCurrentType;
+public $transferRecordName;
+public $availableTransferTypes = [
+    'o71month',
+    'pregnancy',
+    'birthregistry',
+    'bp_monitoring'
+];
+public function openTransferModal($id, $type)
+{
+    $this->transferRecordId = $id;
+    $this->transferCurrentType = $type;
+
+    // Get the record name for display
+    switch ($type) {
+        case 'resident':
+            $record = Residents::find($id);
+            $this->transferRecordName = $record->first_name . ' ' . $record->surname;
+            break;
+        case 'o71month':
+            $record = O71months::find($id);
+            $this->transferRecordName = $record->name_of_child;
+            break;
+        case 'pregnancy':
+            $record = Pregnancy::find($id);
+            $this->transferRecordName = $record->name;
+            break;
+        case 'birthregistry':
+            $record = Birthregistry::find($id);
+            $this->transferRecordName = $record->name_of_child;
+            break;
+        case 'bp_monitoring':
+            $record = BpMonitoring::find($id);
+            $this->transferRecordName = $record->resident_name;
+            break;
+    }
+
+    $this->showTransferModal = true;
+}
+
+public function closeTransferModal()
+{
+    $this->showTransferModal = false;
+    $this->reset(['transferRecordId', 'transferCurrentType', 'transferRecordName']);
+}
+
+// public function transferTo($targetType)
+// {
+//     try {
+//         DB::transaction(function () use ($targetType) {
+//             $sourceRecord = null;
+
+//             // Get the source record
+//             switch ($this->transferCurrentType) {
+//                 case 'resident':
+//                     $sourceRecord = Residents::find($this->transferRecordId);
+//                     break;
+//                 case 'o71month':
+//                     $sourceRecord = O71months::find($this->transferRecordId);
+//                     break;
+//                 case 'pregnancy':
+//                     $sourceRecord = Pregnancy::find($this->transferRecordId);
+//                     break;
+//                 case 'birthregistry':
+//                     $sourceRecord = Birthregistry::find($this->transferRecordId);
+//                     break;
+//                 case 'bp_monitoring':
+//                     $sourceRecord = BpMonitoring::find($this->transferRecordId);
+//                     break;
+//             }
+
+//             if (!$sourceRecord) {
+//                 throw new \Exception("Source record not found");
+//             }
+
+//             // Create the target record based on source data
+//             $targetData = $this->prepareTransferData($sourceRecord, $targetType);
+
+//             switch ($targetType) {
+//                 case 'o71month':
+//                     O71months::create($targetData);
+//                     break;
+//                 case 'pregnancy':
+//                     Pregnancy::create($targetData);
+//                     break;
+//                 case 'birthregistry':
+//                     Birthregistry::create($targetData);
+//                     break;
+//                 case 'bp_monitoring':
+//                     BpMonitoring::create($targetData);
+//                     break;
+//             }
+
+
+//             $sourceRecord->delete();
+//         });
+
+//         session()->flash('message', 'Record transferred successfully.');
+//         $this->closeTransferModal();
+//     } catch (\Exception $e) {
+//         session()->flash('error', 'Error transferring record: ' . $e->getMessage());
+//     }
+// }
+public function transferTo($targetType)
+{
+    try {
+        DB::transaction(function () use ($targetType) {
+            $sourceRecord = null;
+
+            // Get the source record
+            switch ($this->transferCurrentType) {
+                case 'resident':
+                    $sourceRecord = Residents::find($this->transferRecordId);
+                    break;
+                case 'o71month':
+                    $sourceRecord = O71months::find($this->transferRecordId);
+                    break;
+                case 'pregnancy':
+                    $sourceRecord = Pregnancy::find($this->transferRecordId);
+                    break;
+                case 'birthregistry':
+                    $sourceRecord = Birthregistry::find($this->transferRecordId);
+                    break;
+                case 'bp_monitoring':
+                    $sourceRecord = BpMonitoring::find($this->transferRecordId);
+                    break;
+            }
+
+            if (!$sourceRecord) {
+                throw new \Exception("Source record not found");
+            }
+
+            // Create the target record based on source data
+            $targetData = $this->prepareTransferData($sourceRecord, $targetType);
+
+            // Create the new record
+            switch ($targetType) {
+                case 'o71month':
+                    O71months::create($targetData);
+                    break;
+                case 'pregnancy':
+                    Pregnancy::create($targetData);
+                    break;
+                case 'birthregistry':
+                    Birthregistry::create($targetData);
+                    break;
+                case 'bp_monitoring':
+                    BpMonitoring::create($targetData);
+                    break;
+            }
+
+            // Delete the old record
+            $sourceRecord->delete();
+        });
+
+        session()->flash('message', 'Record transferred successfully.');
+        $this->closeTransferModal();
+    } catch (\Exception $e) {
+        session()->flash('error', 'Error transferring record: ' . $e->getMessage());
+    }
+}
+// protected function prepareTransferData($sourceRecord, $targetType)
+// {
+//     $commonData = [
+//         'id_number' => $sourceRecord->id_number ?? null,
+//         'date_of_birth' => $sourceRecord->date_of_birth ?? null,
+//         'gender' => $sourceRecord->gender ?? null,
+//         'phone_number' => $sourceRecord->phone_number ?? $sourceRecord->mobile_number ?? null,
+//         'status' => $sourceRecord->status ?? 'Active',
+//         'is_desease' => $sourceRecord->is_desease ?? false,
+//     ];
+
+//     switch ($targetType) {
+//         case 'o71month':
+//             return array_merge($commonData, [
+//                 'name_of_child' => $sourceRecord->name_of_child ?? $sourceRecord->name ?? $sourceRecord->resident_name ?? 'Unknown',
+//                 'name_of_parent' => $sourceRecord->name_of_parent ?? 'Unknown',
+//                 'age_in_month' => $sourceRecord->age_in_month ?? 0,
+//                 'weight' => $sourceRecord->weight ?? null,
+//                 'height' => $sourceRecord->height ?? null,
+//                 'family_no' => $sourceRecord->family_no ?? $sourceRecord->family_number ?? null,
+//                 'zone' => $sourceRecord->zone ?? $sourceRecord->zone_or_purok ?? null,
+//             ]);
+
+//         case 'pregnancy':
+//             return array_merge($commonData, [
+//                 'name' => $sourceRecord->name ?? $sourceRecord->name_of_child ?? $sourceRecord->resident_name ?? 'Unknown',
+//                 'age' => $sourceRecord->age ?? 0,
+//                 'family_no' => $sourceRecord->family_no ?? $sourceRecord->family_number ?? null,
+//                 'zone' => $sourceRecord->zone ?? $sourceRecord->zone_or_purok ?? null,
+//                 'mobile_number' => $sourceRecord->mobile_number ?? $sourceRecord->phone_number ?? null,
+//                 'estimated_due_date' => $sourceRecord->estimated_due_date ?? null,
+//                 'last_checkup' => $sourceRecord->last_checkup ?? null,
+//                 'child_name' => $sourceRecord->child_name ?? null,
+//             ]);
+
+//         case 'birthregistry':
+//             return array_merge($commonData, [
+//                 'name_of_child' => $sourceRecord->name_of_child ?? $sourceRecord->name ?? $sourceRecord->resident_name ?? 'Unknown',
+//                 'name_of_parent' => $sourceRecord->name_of_parent ?? 'Unknown',
+//                 'family_no' => $sourceRecord->family_no ?? $sourceRecord->family_number ?? null,
+//                 'zone' => $sourceRecord->zone ?? $sourceRecord->zone_or_purok ?? null,
+//                 'birth_weight' => $sourceRecord->birth_weight ?? $sourceRecord->weight ?? null,
+//                 'place_of_birth' => $sourceRecord->place_of_birth ?? null,
+//                 'is_registered' => $sourceRecord->is_registered ?? false,
+//             ]);
+
+//         case 'bp_monitoring':
+//             return array_merge($commonData, [
+//                 'resident_name' => $sourceRecord->resident_name ?? $sourceRecord->name ?? $sourceRecord->name_of_child ?? 'Unknown',
+//                 'age' => $sourceRecord->age ?? 0,
+//                 'bp' => $sourceRecord->bp ?? null,
+//                 'level' => $sourceRecord->level ?? 'normal',
+//                 'date' => $sourceRecord->date ?? now()->format('Y-m-d'),
+//             ]);
+//     }
+
+//     return [];
+// }
+
+protected function prepareTransferData($sourceRecord, $targetType)
+{
+    // Common data that exists in all tables
+    $commonData = [
+        'id_number' => $sourceRecord->id_number ?? null,
+        'date_of_birth' => $sourceRecord->date_of_birth ?? null,
+        'gender' => $sourceRecord->gender ?? null,
+        'phone_number' => $sourceRecord->phone_number ?? $sourceRecord->mobile_number ?? null,
+        'status' => $sourceRecord->status ?? 'Active',
+        'is_desease' => $sourceRecord->is_desease ?? false,
+    ];
+
+    // Get the name field based on the source record type
+    $name = match (true) {
+        isset($sourceRecord->name_of_child) => $sourceRecord->name_of_child,
+        isset($sourceRecord->resident_name) => $sourceRecord->resident_name,
+        isset($sourceRecord->name) => $sourceRecord->name,
+        isset($sourceRecord->first_name) => $sourceRecord->first_name . ' ' . ($sourceRecord->surname ?? ''),
+        default => 'Unknown'
+    };
+
+    switch ($targetType) {
+        case 'o71month':
+            return array_merge($commonData, [
+                'name_of_child' => $name,
+                'name_of_parent' => $sourceRecord->name_of_parent ?? 'Unknown',
+                'age_in_month' => $sourceRecord->age_in_month ?? $sourceRecord->age ?? 0,
+                'weight' => $sourceRecord->weight ?? $sourceRecord->birth_weight ?? null,
+                'height' => $sourceRecord->height ?? null,
+                'family_no' => $sourceRecord->family_no ?? $sourceRecord->family_number ?? $sourceRecord->pregnancy_family_number ?? $sourceRecord->birthregistry_fam_number ?? null,
+                'zone' => $sourceRecord->zone ?? $sourceRecord->zone_or_purok ?? null,
+            ]);
+
+        case 'pregnancy':
+            return array_merge($commonData, [
+                'name' => $name,
+                'age' => $sourceRecord->age ?? $sourceRecord->age_in_month ?? 0,
+                'family_no' => $sourceRecord->family_no ?? $sourceRecord->family_number ?? $sourceRecord->pregnancy_family_number ?? $sourceRecord->birthregistry_fam_number ?? null,
+                'zone' => $sourceRecord->zone ?? $sourceRecord->zone_or_purok ?? null,
+                'mobile_number' => $sourceRecord->mobile_number ?? $sourceRecord->phone_number ?? null,
+                'estimated_due_date' => $sourceRecord->estimated_due_date ?? null,
+                'last_checkup' => $sourceRecord->last_checkup ?? null,
+                'child_name' => $sourceRecord->child_name ?? null,
+            ]);
+
+        case 'birthregistry':
+            return array_merge($commonData, [
+                'name_of_child' => $name,
+                'name_of_parent' => $sourceRecord->name_of_parent ?? 'Unknown',
+                'family_no' => $sourceRecord->family_no ?? $sourceRecord->family_number ?? $sourceRecord->pregnancy_family_number ?? $sourceRecord->birthregistry_fam_number ?? null,
+                'zone' => $sourceRecord->zone ?? $sourceRecord->zone_or_purok ?? null,
+                'birth_weight' => $sourceRecord->birth_weight ?? $sourceRecord->weight ?? null,
+                'place_of_birth' => $sourceRecord->place_of_birth ?? null,
+                'is_registered' => $sourceRecord->is_registered ?? false,
+            ]);
+
+        case 'bp_monitoring':
+            return array_merge($commonData, [
+                'resident_name' => $name,
+                'age' => $sourceRecord->age ?? $sourceRecord->age_in_month ?? 0,
+                'bp' => $sourceRecord->bp ?? null,
+                'level' => $sourceRecord->level ?? 'normal',
+                'date' => $sourceRecord->date ?? now()->format('Y-m-d'),
+            ]);
+    }
+
+    return [];
+}
     public function openAddModal($type)
     {
         $this->modalType = $type;

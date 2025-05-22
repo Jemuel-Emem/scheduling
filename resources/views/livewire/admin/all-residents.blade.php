@@ -63,6 +63,17 @@
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $record->status }}</td>
                                                <td class="px-6 py-4 text-sm text-gray-500">{{ $record->type }}</td>
                         <td class="px-6 py-4 text-sm font-medium">
+                            <div class="relative inline-block text-left mr-2">
+        <div>
+            <button type="button" wire:click="openTransferModal({{ $record->id }}, '{{ $record->type }}')"
+                    class="text-purple-600 hover:text-purple-900"
+                    id="category-menu-button-{{ $record->id }}"
+                    aria-expanded="false"
+                    aria-haspopup="true">
+                Category
+            </button>
+        </div>
+    </div>
                             <button wire:click="view({{ $record->id }}, '{{ $record->type }}')"
                                 class="text-blue-600 hover:text-blue-900 mr-2">
                                 View
@@ -688,4 +699,44 @@
 
 @endif
 
+
+
+{{-- modal for category --}}
+
+@if($showTransferModal)
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+            <div class="flex justify-between items-start">
+                <h3 class="text-xl font-semibold mb-4">Transfer Record</h3>
+                <button wire:click="closeTransferModal" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <p>Transfer <strong>{{ $transferRecordName }}</strong> to:</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                @foreach($availableTransferTypes as $type)
+                    @if($type !== $transferCurrentType)
+                        <button wire:click="transferTo('{{ $type }}')"
+                                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                            {{ ucfirst($type) }}
+                        </button>
+                    @endif
+                @endforeach
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button wire:click="closeTransferModal"
+                        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+@endif
 </div>

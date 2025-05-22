@@ -178,13 +178,17 @@
                                 @error('date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
-                            <!-- Time Schedule -->
-                            <div>
-                                <label for="time" class="block text-sm font-medium text-gray-700">Time *</label>
-                                <input type="time" id="time" wire:model.defer="time"
-                                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                                @error('time') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+                         <!-- Time Schedule -->
+<div>
+    <label for="time" class="block text-sm font-medium text-gray-700">Time *</label>
+    <input type="time" id="time" wire:model.defer="time"
+           step="300"
+           min="08:00" max="17:00"
+           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+           required>
+    @error('time') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+    <div class="text-xs text-gray-500 mt-1">Please select a time in 5-minute intervals (e.g., 09:00, 09:05).</div>
+</div>
 
 
 <div x-data="{ showReschedule: false }">
@@ -245,13 +249,10 @@
                                     class="px-4 py-2 bg-gray-500 text-white font-semibold rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                                 Cancel
                             </button>
-                            {{-- <button type="submit"
+                            <button type="submit"
                                     class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 {{ $editMode ? 'Update' : 'Save' }} Appointment
-                            </button> --}}
-
-                            <button wire:click.prevent="submitAppointment" class="btn btn-primary">Submit</button>
-
+                            </button>
                         </div>
                     </form>
                 @endif

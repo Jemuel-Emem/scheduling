@@ -26,22 +26,33 @@ class Appointments extends Component
     public $existingRecord = null;
     public $showExistingRecordInfo = false;
 
-    protected $rules = [
+protected $messages = [
+    'time.regex' => 'The time must be in 5-minute intervals (e.g., 09:00, 09:05).',
+];
 
-        'name' => 'required|string|max:255',
-        'phone' => 'required|numeric',
-        'age' => 'required|integer|min:1',
-        'address' => 'required|string|max:255',
-        'purpose' => 'nullable|string',
-        'date' => 'required|date',
-        'reschedule_option' => 'nullable|string',
-        'reschedule_date' => 'nullable|date|after:date',
-        'time' => 'required',
-        'health_condition' => 'nullable|string',
-        'health_status' => 'nullable|string',
-        'blood_pressure' => 'nullable|string',
-    ];
-
+  protected $rules = [
+    'name' => 'required|string|max:255',
+    'phone' => 'required|numeric',
+    'age' => 'required|integer|min:1',
+    'address' => 'required|string|max:255',
+    'purpose' => 'nullable|string',
+    'date' => 'required|date',
+    'reschedule_option' => 'nullable|string',
+    'reschedule_date' => 'nullable|date|after:date',
+    'time' => ['required', 'regex:/^(0[0-9]|1[0-9]|2[0-3]):(00|05|10|15|20|25|30|35|40|45|50|55)$/'],
+    'health_condition' => 'nullable|string',
+    'health_status' => 'nullable|string',
+    'blood_pressure' => 'nullable|string',
+];
+public function updatedTime($value)
+{
+    if ($value) {
+        $time = strtotime($value);
+        $minutes = date('i', $time);
+        $roundedMinutes = round($minutes / 5) * 5;
+        $this->time = date('H:', $time) . str_pad($roundedMinutes, 2, '0', STR_PAD_LEFT);
+    }
+}
     public function openAddModal()
     {
         $this->resetFields();
